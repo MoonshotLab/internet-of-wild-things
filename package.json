@@ -1,0 +1,12 @@
+{
+  "name": "iternet-of-wild-things",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "Joe Longstreet",
+  "license": "MIT",
+  "dependencies": {
+    "eventsource": "^0.1.0",
+    "spark-cli": "^0.3.0"
+  }
+}

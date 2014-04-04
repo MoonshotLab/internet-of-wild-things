@@ -1,26 +1,31 @@
-## Spark Core API
+# The Internet of Wild Things
 
-### [GET] List all available methods
-`https://api.spark.io/v1/devices/{deviceID}?access_token={accessToken}`
+This project is in support of [Barkley's](http://barkleyus.com/) *"The Internet of [Wild Thing's](http://en.wikipedia.org/wiki/Major_League_(film) Class"*. The goal of the class is is to teach students with no electronics or programming experience how to begin combining the internet with the real world. Through the use of a [Spark Core](http://spark.io) and [Zapier](http://zapier.com/), students can combine electronics components, configure a web interface, and make real world and web events work together.
 
-### [POST] Get the state of a pin
-`https://api.spark.io/v1/devices/{deviceId}/getState`
-##### Post Data
-```
-access_token={accessToken}
-params={pinType}{PinNumber}
-```
 
-### [POST] Set the state of a pin
+## Spark Core
+The firmware on the spark core is configured to accept inputs on odd pin numbers, and outputs on even pin numbers. When an input's value is changed, the event is broadcast.
+
+Setting and retrieving pin values can be accomplished via the REST API listed below.
+
+### Pub Sub API
+There is subscription event called `update`. By subscribing to this event, your application will be immediately notified of any change to a digital or analog input. Analog inputs are broadcast whenever a threshold is met, the value can be modified within the threshold setting on the firmware.
+
+### REST API
+* To list all available methods:
+`GET - https://api.spark.io/v1/devices/{deviceID}?access_token={accessToken}`
+
+
+* To retrieve the current state of a pin:
+`POST - https://api.spark.io/v1/devices/{deviceId}/getState`
+Note that you must pass two form data params with your post request. `access_token={accessToken} params={pinType}{PinNumber}`
+
+* Set the state of a pin
 `https://api.spark.io/v1/devices/{deviceId}/setState`
-##### Post Data
-```
-access_token={accessToken}
-params={pinType}{PinNumber},{pinValue}
-```
-
+Note that you must pass three two data params with your post request. access_token={accessToken} params={pinType}{PinNumber},{pinValue}
 
 
 ## Todos
+* How can we bring this kind of event machine into node?
 * Setup a proof of concept where a button pressed can send a message to twitter
 * Create a service where you can subscribe to the change of any pin.
