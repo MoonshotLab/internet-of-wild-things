@@ -1,37 +1,27 @@
-// Setup pin arrays
-int digitalOutputs[] = {D0, 0, D2, 0, D4, 0, D6, 0};
-int digitalInputs[]  = {0, D1, 0, D3, 0, D5, 0, D7};
-int analogOutputs[]  = {A0, 0, A2, 0, A4, 0, A6, 0};
-int analogInputs[]   = {0, A1, 0, A3, 0, A5, 0, A7};
-
-int state_A0 = 0;
-int state_D0 = 0;
-int state_A1 = 0;
-int state_D1 = 0;
-
-
 // Get the digital or analog pin from the stored
 // arrays above
-int getPin(char type, int pinNumber)
+int getPinValue(char pinType, char pinNumber)
 {
-  // is it an input or output?
-  int modulo = pinNumber%2;
-
-  // digital or analog?
-  if(type == 'D'){
-    if(modulo == 1){
-      return digitalOutputs[pinNumber];
-    } else {
-      return digitalInputs[pinNumber];
-    }
-  } else if(type == 'A'){
-    if(modulo == 1){
-      return analogOutputs[pinNumber];
-    } else {
-      return analogInputs[pinNumber];
-    }
-  } else{
-    return -1;
+  if(pinType == 'D'){
+    if(pinNumber == '0') return digitalRead(D0);
+    else if(pinNumber == '1') return digitalRead(D1);
+    else if(pinNumber == '2') return digitalRead(D2);
+    else if(pinNumber == '3') return digitalRead(D3);
+    else if(pinNumber == '4') return digitalRead(D4);
+    else if(pinNumber == '5') return digitalRead(D5);
+    else if(pinNumber == '6') return digitalRead(D6);
+    else if(pinNumber == '7') return digitalRead(D7);
+  } else if(pinType == 'A'){
+    if(pinNumber == '0') return analogRead(A0);
+    else if(pinNumber == '1') return analogRead(A1);
+    else if(pinNumber == '2') return analogRead(A2);
+    else if(pinNumber == '3') return analogRead(A3);
+    else if(pinNumber == '4') return analogRead(A4);
+    else if(pinNumber == '5') return analogRead(A5);
+    else if(pinNumber == '6') return analogRead(A6);
+    else if(pinNumber == '7') return analogRead(A7);
+  } else {
+    return 'x';
   }
 }
 
@@ -40,23 +30,11 @@ int getPin(char type, int pinNumber)
 // analog read value
 int getState(String param)
 {
-/*  // convert ascii to integer
-  int pinNumber = param.charAt(1) - '0';
+  char pinNumber = param.charAt(1);
   char pinType = param.charAt(0);
 
-  // read and return
-  int pin = getPin(pinType, pinNumber);
-
-  if(pinType == 'D'){
-    return digitalRead(pin);
-  } else if(pinType == 'A'){
-    return analogRead(pin);
-  }*/
-
-  state_A0 = analogRead(A0);
-  state_A1 = analogRead(A0);
-  state_D0 = analogRead(D0);
-  state_D1 = analogRead(D1);
+  int pinValue = getPinValue(pinType, pinNumber);
+  return pinValue;
 }
 
 
@@ -65,23 +43,33 @@ int getState(String param)
 // new value
 int setState(String param)
 {
-  // convert ascii to integer
-  int pinNumber = param.charAt(1) - '0';
+  char pinNumber = param.charAt(1);
   char pinType = param.charAt(0);
 
-  int pin = getPin(pinType, pinNumber);
   String stringState = param.substring(3, param.length());
   int state = stringState.toInt();
 
   if(pinType == 'D'){
-    digitalWrite(pin, state);
-    return digitalRead(pin);
+    if(pinNumber == '0') digitalWrite(D0, state);
+    else if(pinNumber == '1') digitalWrite(D1, state);
+    else if(pinNumber == '2') digitalWrite(D2, state);
+    else if(pinNumber == '3') digitalWrite(D3, state);
+    else if(pinNumber == '4') digitalWrite(D4, state);
+    else if(pinNumber == '5') digitalWrite(D5, state);
+    else if(pinNumber == '6') digitalWrite(D6, state);
+    else if(pinNumber == '7') digitalWrite(D7, state);
   } else if(pinType == 'A'){
-    analogWrite(pin, state);
-    return analogRead(pin);
-  } else{
-    return -1;
+    if(pinNumber == '0') analogWrite(A0, state);
+    else if(pinNumber == '1') analogWrite(A1, state);
+    else if(pinNumber == '2') analogWrite(A2, state);
+    else if(pinNumber == '3') analogWrite(A3, state);
+    else if(pinNumber == '4') analogWrite(A4, state);
+    else if(pinNumber == '5') analogWrite(A5, state);
+    else if(pinNumber == '6') analogWrite(A6, state);
+    else if(pinNumber == '7') analogWrite(A7, state);
   }
+
+  return state;
 }
 
 
@@ -105,10 +93,6 @@ void setup()
   pinMode(A5, INPUT);
   pinMode(A7, INPUT);
 
-  Spark.variable("A0", &state_A0, INT);
-  Spark.variable("D0", &state_D0, INT);
-  Spark.variable("A1", &state_A1, INT);
-  Spark.variable("D1", &state_D1, INT);
   Spark.function("getState", getState);
   Spark.function("setState", setState);
 }
