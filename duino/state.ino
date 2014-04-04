@@ -1,3 +1,12 @@
+int previousD1State = 0;
+int previousD3State = 0;
+int previousD5State = 0;
+int previousD7State = 0;
+int previousA1State = 0;
+int previousA3State = 0;
+int previousA5State = 0;
+int previousA7State = 0;
+
 // Get the digital or analog pin from the stored
 // arrays above
 int getPinValue(char pinType, char pinNumber)
@@ -100,5 +109,25 @@ void setup()
 
 void loop()
 {
+  int currentD1State = getPinValue('D', '1');
+  int currentD3State = getPinValue('D', '3');
+  int currentD5State = getPinValue('D', '5');
+  int currentD7State = getPinValue('D', '7');
 
+  if(currentD1State != previousD1State){
+    previousD1State = currentD1State;
+    Spark.publish("update", String(currentD1State));
+  }
+  if(currentD3State != previousD3State){
+    previousD3State = currentD3State;
+    Spark.publish("update", String(currentD3State));
+  }
+  if(currentD5State != previousD5State){
+    previousD5State = currentD5State;
+    Spark.publish("update", String(currentD5State));
+  }
+  if(currentD7State != previousD7State){
+    previousD7State = currentD7State;
+    Spark.publish("update", String(currentD7State));
+  }
 }
