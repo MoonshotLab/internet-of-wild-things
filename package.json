@@ -6,7 +6,7 @@
   "author": "Joe Longstreet",
   "license": "MIT",
   "dependencies": {
-    "eventsource": "^0.1.0",
-    "spark-cli": "^0.3.0"
+    "spark-cli": "0.3.0",
+    "xtend": "^2.2.0"
   }
 }
