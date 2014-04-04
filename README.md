@@ -1,6 +1,6 @@
 # The Internet of Wild Things
 
-This project is in support of [Barkley's](http://barkleyus.com/) *"The Internet of [Wild Thing's](http://en.wikipedia.org/wiki/Major_League_(film) Class"*. The goal of the class is is to teach students with no electronics or programming experience how to begin combining the internet with the real world. Through the use of a [Spark Core](http://spark.io) and [Zapier](http://zapier.com/), students can combine electronics components, configure a web interface, and make real world and web events work together.
+This project is in support of [Barkley's](http://barkleyus.com/) **The Internet of Wild Thing's** class. The goal of the class is is to teach students with no electronics or programming experience how to begin combining the internet with the real world. Through the use of a [Spark Core](http://spark.io) and [Zapier](http://zapier.com/), students can combine electronics components, configure a web interface, and make real world and web events work together.
 
 
 ## Spark Core

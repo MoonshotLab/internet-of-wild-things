@@ -1,7 +1,7 @@
 {
   "name": "iternet-of-wild-things",
   "version": "0.0.0",
-  "description": "",
+  "description": "spark.io meets node in a REST pub sub mash up",
   "main": "index.js",
   "author": "Joe Longstreet",
   "license": "MIT",
