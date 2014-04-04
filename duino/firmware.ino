@@ -85,7 +85,10 @@ void loop()
 
         if(abs(analogStates[a] - currentState) > analogChangeThreshold){
           analogStates[a] = currentState;
-          Spark.publish("update", String(currentState));
+
+          char publishString[64];
+          sprintf(publishString, "{ pindId: A%u, state: %u }", a, currentState);
+          Spark.publish("update", publishString);
         }
       }
     }
@@ -99,7 +102,10 @@ void loop()
 
         if(currentState != digitalStates[d]){
           digitalStates[d] = currentState;
-          Spark.publish("update", String(currentState));
+
+          char publishString[64];
+          sprintf(publishString, "{pindId: D%u, state: %u }", d, currentState);
+          Spark.publish("update", publishString);
         }
       }
     }
