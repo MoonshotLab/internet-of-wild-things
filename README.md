@@ -25,7 +25,10 @@ Note that you must pass two form data params with your post request. `access_tok
 Note that you must pass three two data params with your post request. access_token={accessToken} params={pinType}{PinNumber},{pinValue}
 
 
-## Todos
-* How can we bring this kind of event machine into node?
-* Setup a proof of concept where a button pressed can send a message to twitter
-* Create a service where you can subscribe to the change of any pin.
+## Notes
+* Flash the spark with updated firmware - `spark cloud flash 51ff6f065067545728250187 duino/firmware.ino`.
+* Subscribe to all inputs - `spark subscribe update`.
+
+### Todos
+* The event machine module for node doesn't look like it really works with spark. Need to find a way to make this work.
+* Look at Zapier and see if you can set up something besides a web hook, like some kind of custom pub sub...

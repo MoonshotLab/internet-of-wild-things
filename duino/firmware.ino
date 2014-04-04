@@ -1,4 +1,4 @@
-int analogChangeThreshold = 10;
+int analogChangeThreshold = 5;
 
 int digitalPins[] = {D0, D1, D2, D3, D4, D5, D6, D7};
 int analogPins[] = {A0, A1, A2, A3, A4, A5, A6, A7};
@@ -51,13 +51,13 @@ void setup()
 {
   // Setup default pin modes. Odds are inputs,
   // evens are outputs
-  for(int a=0; a<8; a = a + 1){
+  for(int a=0; a<8; a++){
     if(a%2 == 1){
       pinMode(analogPins[a], INPUT);
     } else pinMode(analogPins[a], OUTPUT);
   }
 
-  for(int d=0; d<8; d = d + 1){
+  for(int d=0; d<8; d++){
     if(d%2 == 1){
       pinMode(digitalPins[d], INPUT);
     } else pinMode(digitalPins[d], OUTPUT);
@@ -79,9 +79,9 @@ void loop()
     // Loop over the analog inputs and publish the read
     // states if they've changed "enough" since the
     // previous event loop
-    for(int a=0; a<8; a = a + 1){
+    for(int a=0; a<8; a++){
       if(a%2 == 1){
-        int currentState = digitalRead(analogPins[a]);
+        int currentState = analogRead(analogPins[a]);
 
         if(abs(analogStates[a] - currentState) > analogChangeThreshold){
           analogStates[a] = currentState;
@@ -93,7 +93,7 @@ void loop()
     // Loop over the digital inputs and publish the read
     // states if they've changed since the previous
     // event loop
-    for(int d=0; d<8; d = d + 1){
+    for(int d=0; d<8; d++){
       if(d%2 == 1){
         int currentState = digitalRead(digitalPins[d]);
 
