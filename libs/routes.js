@@ -27,9 +27,9 @@ exports.pin = function(coreId, pinId){
   var client = controller.getClient(coreId, context.params.accessToken);
 
   if(!pinId)
-    responder({ error: 'You must specify a pin id'}, context);
+    responder({ error: 'You must specify a pin id' }, {}, context);
   else if(!this.params.accessToken)
-    responder({ error: 'You must specify an access token'}, context);
+    responder({ error: 'You must specify an access token' }, {}, context);
   else{
     if(this.params.pinVal)
       controller.setPin(pinId, client, context, responder);
