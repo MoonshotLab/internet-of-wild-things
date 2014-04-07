@@ -1,8 +1,6 @@
-var Spark = require('./spark');
-var sparkClients = [];
+var controller = require('./controller');
 
-
-var jsonResponder = function(err, res, context){
+var responder = function(err, res, context){
   context.response.writeHead(200,
     { 'Content-Type': 'text/json' }
   );
@@ -11,35 +9,6 @@ var jsonResponder = function(err, res, context){
   else context.response.write(JSON.stringify(res));
 
   context.response.end();
-};
-
-
-var handleInputUpdate = function(e){
-  if(e.coreid) console.log(e);
-};
-
-
-var retrieveClient = function(coreId, token){
-  var sparkClient = null;
-
-  sparkClients.forEach(function(client){
-    if(client.opts.coreId === coreId) sparkClient = client;
-  });
-
-  if(sparkClient) return sparkClient
-  else{
-    sparkClient = Spark.createClient({
-      coreId: coreId,
-      token: token
-    });
-
-    sparkClient.subscribe('input-update')
-      .on('update', handleInputUpdate);
-
-    sparkClients.push(sparkClient);
-  }
-
-  return sparkClient;
 };
 
 
@@ -53,26 +22,20 @@ exports.home = function(){
 };
 
 
-exports.getPin = function(coreId, pinId){
+exports.pin = function(coreId, pinId){
   var context = this;
-  var client = retrieveClient(coreId, context.params.accessToken);
+  var client = controller.getClient(coreId, context.params.accessToken);
 
-  client.getPin({
-    pinId: pinId
-  }, function(err, res){
-    jsonResponder(err, res, context);
-  });
-};
-
-
-exports.setPin = function(coreId, pinId, pinVal){
-  var context = this;
-  var client = retrieveClient(coreId, context.params.accessToken);
-
-  client.setPin({
-    pinId: pinId,
-    value: pinVal
-  }, function(err, res){
-    jsonResponder(err, res, context);
-  });
+  if(!pinId)
+    responder({ error: 'You must specify a pin id'}, context);
+  else if(!this.params.accessToken)
+    responder({ error: 'You must specify an access token'}, context);
+  else{
+    if(this.params.pinVal)
+      controller.setPin(pinId, client, context, responder);
+    else if(this.params.webHook)
+      controller.setWebhook(pinId, client, context, responder);
+    else
+      controller.getPin(pinId, client, context, responder);
+  }
 };
