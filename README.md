@@ -30,5 +30,5 @@ Note that you must pass three two data params with your post request. access_tok
 * Subscribe to all inputs - `spark subscribe update`.
 
 ### Todos
-* The event machine module for node doesn't look like it really works with spark. Need to find a way to make this work.
-* Look at Zapier and see if you can set up something besides a web hook, like some kind of custom pub sub...
+* Accept a callback web hook url for each core
+* Debug analog input problems

@@ -14,6 +14,11 @@ var jsonResponder = function(err, res, context){
 };
 
 
+var handleInputUpdate = function(e){
+  if(e.coreid) console.log(e);
+};
+
+
 var retrieveClient = function(coreId, token){
   var sparkClient = null;
 
@@ -28,9 +33,8 @@ var retrieveClient = function(coreId, token){
       token: token
     });
 
-    sparkClient.subscribe().on('update', function(e){
-      console.log(e);
-    });
+    sparkClient.subscribe('input-update')
+      .on('update', handleInputUpdate);
 
     sparkClients.push(sparkClient);
   }

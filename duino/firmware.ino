@@ -88,7 +88,7 @@ void loop()
 
           char publishString[64];
           sprintf(publishString, "{ pindId: A%u, state: %u }", a, currentState);
-          Spark.publish("update", publishString);
+          Spark.publish("input-update", publishString);
         }
       }
     }
@@ -105,7 +105,7 @@ void loop()
 
           char publishString[64];
           sprintf(publishString, "{pindId: D%u, state: %u }", d, currentState);
-          Spark.publish("update", publishString);
+          Spark.publish("input-update", publishString);
         }
       }
     }

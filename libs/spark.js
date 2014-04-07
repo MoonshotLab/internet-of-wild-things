@@ -43,7 +43,8 @@ Client.prototype.setPin = function(opts, next){
 };
 
 
-Client.prototype.subscribe = function(){
+Client.prototype.subscribe = function(eventName){
+  if(eventName) this.opts.eventName = eventName;
   var emitter = new EE();
 
   var onData = function(event) {
