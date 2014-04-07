@@ -73,7 +73,12 @@ unsigned long lastTime = 0UL;
 void loop()
 {
   unsigned long now = millis();
-  if (now-lastTime>100UL) {
+
+  if(now-lastTime>5000UL){
+    Spark.publish("polling", "polling");
+  }
+
+  if(now-lastTime>100UL){
     lastTime = now;
 
     // Loop over the analog inputs and publish the read
@@ -87,7 +92,7 @@ void loop()
           analogStates[a] = currentState;
 
           char publishString[64];
-          sprintf(publishString, "{ pinId: A%u, state: %u }", a, currentState);
+          sprintf(publishString, "{ \"pinId\": \"A%u\", \"state\": %u }", d, currentState);
           Spark.publish("input-update", publishString);
         }
       }
@@ -104,7 +109,7 @@ void loop()
           digitalStates[d] = currentState;
 
           char publishString[64];
-          sprintf(publishString, "{pinId: D%u, state: %u }", d, currentState);
+          sprintf(publishString, "{ \"pinId\": \"D%u\", \"state\": %u }", d, currentState);
           Spark.publish("input-update", publishString);
         }
       }

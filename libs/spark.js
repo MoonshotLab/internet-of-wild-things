@@ -80,7 +80,7 @@ Client.prototype.subscribe = function(eventName){
       }
     }
 
-    emitter.emit('update', JSON.stringify(obj));
+    emitter.emit('update', obj);
   };
 
 
