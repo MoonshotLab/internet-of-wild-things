@@ -33,7 +33,7 @@ exports.pin = function(coreId, pinId){
   else{
     if(this.params.pinVal)
       controller.setPin(pinId, client, context, responder);
-    else if(this.params.webHook)
+    else if(this.params.webhook)
       controller.setWebhook(pinId, client, context, responder);
     else
       controller.getPin(pinId, client, context, responder);
