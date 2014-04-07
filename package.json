@@ -8,6 +8,7 @@
   "dependencies": {
     "spark-cli": "0.3.0",
     "xtend": "^2.2.0",
-    "needle": "^0.6.6"
+    "needle": "^0.6.6",
+    "pathways": "0.0.11"
   }
 }

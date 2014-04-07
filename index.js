@@ -1,26 +1,49 @@
+var Pathways = require('pathways');
+var http = require('http');
 var Spark = require('./libs/spark');
+
+var pathways = Pathways();
+var server = http.createServer(pathways);
 var sparkClient = Spark.createClient({
   coreId: process.env.SPARK_CORE_ID,
   token: process.env.SPARK_CORE_TOKEN
 });
 
 var sparkEvents = sparkClient.subscribe();
-
 sparkEvents.on('update', function(e){
   console.log(e);
 });
 
-sparkClient.getPin({
-  pinId: 'D0'
-}, function(err, res){
-  if(err) console.log(err);
-  console.log(res);
-});
+pathways
+  .get('/getPin/:id', function(id){
+    var self = this;
+    sparkClient.getPin({
+      pinId: id
+    }, function(err, res){
+      routeCallback(err, res, self);
+    });
+  })
 
-sparkClient.setPin({
-  pinId: 'D2',
-  value: 0
-}, function(err, res){
-  if(err) console.log(err);
-  console.log(res);
-});
+  .get('/setPin/:id/:val', function(id, val){
+    var self = this;
+    sparkClient.setPin({
+      pinId: id,
+      value: val
+    }, function(err, res){
+      routeCallback(err, res, self);
+    });
+  });
+
+
+var routeCallback = function(err, res, context){
+  context.response.writeHead(200,
+    { 'Content-Type': 'text/json' }
+  );
+
+  if(err) context.response.write(JSON.stringify(err));
+  else context.response.write(JSON.stringify(res));
+
+  context.response.end();
+};
+
+server.listen(3000);
