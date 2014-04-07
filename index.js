@@ -15,6 +15,15 @@ sparkEvents.on('update', function(e){
 });
 
 pathways
+  .get('/', function(){
+    this.response.writeHead(200,
+      { 'Content-Type': 'text/html' }
+    );
+
+    this.response.write('App connected...');
+    this.response.end();
+  })
+
   .get('/getPin/:id', function(id){
     var self = this;
     sparkClient.getPin({
