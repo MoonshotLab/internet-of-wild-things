@@ -6,8 +6,8 @@ var sparkClients = [];
 var callWebhook = function(e){
 
   var parsedJSON = null;
-  try{ parsedJSON = JSON.parse(e.data) }
-  catch(e){ console.log('error parsing json', e); }
+  try{ parsedJSON = JSON.parse(e.data); }
+  catch(err){ console.log('error parsing json', err); }
 
   if(parsedJSON){
     var pinId = parsedJSON.pinId;
@@ -38,7 +38,7 @@ var getClient = function(coreId, token){
     if(client.opts.coreId === coreId) sparkClient = client;
   });
 
-  if(sparkClient) return sparkClient
+  if(sparkClient) return sparkClient;
   else{
     sparkClient = Spark.createClient({
       coreId: coreId,
