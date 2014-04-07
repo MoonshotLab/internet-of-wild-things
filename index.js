@@ -7,8 +7,8 @@ var server = http.createServer(pathways);
 
 pathways
   .get('/', routes.home)
-  .get('/getPin/:id', routes.getPin)
-  .get('/setPin/:id/:val', routes.setPin);
+  .get('/:coreId/:pinId', routes.getPin)
+  .get('/:coreId/:pinId/:pinVal', routes.setPin);
 
 var port = process.env.PORT || 3000;
 server.listen(port);

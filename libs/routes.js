@@ -1,13 +1,5 @@
 var Spark = require('./spark');
-var sparkClient = Spark.createClient({
-  coreId: process.env.SPARK_CORE_ID,
-  token: process.env.SPARK_CORE_TOKEN
-});
-
-var sparkEvents = sparkClient.subscribe();
-sparkEvents.on('update', function(e){
-  console.log(e);
-});
+var sparkClients = [];
 
 
 var jsonResponder = function(err, res, context){
@@ -22,6 +14,31 @@ var jsonResponder = function(err, res, context){
 };
 
 
+var retrieveClient = function(coreId, token){
+  var sparkClient = null;
+
+  sparkClients.forEach(function(client){
+    if(client.opts.coreId === coreId) sparkClient = client;
+  });
+
+  if(sparkClient) return sparkClient
+  else{
+    sparkClient = Spark.createClient({
+      coreId: coreId,
+      token: token
+    });
+
+    sparkClient.subscribe().on('update', function(e){
+      console.log(e);
+    });
+
+    sparkClients.push(sparkClient);
+  }
+
+  return sparkClient;
+};
+
+
 exports.home = function(){
   this.response.writeHead(200,
     { 'Content-Type': 'text/html' }
@@ -32,22 +49,26 @@ exports.home = function(){
 };
 
 
-exports.getPin = function(id){
-  var self = this;
-  sparkClient.getPin({
-    pinId: id
+exports.getPin = function(coreId, pinId){
+  var context = this;
+  var client = retrieveClient(coreId, context.params.accessToken);
+
+  client.getPin({
+    pinId: pinId
   }, function(err, res){
-    jsonResponder(err, res, self);
+    jsonResponder(err, res, context);
   });
 };
 
 
-exports.setPin = function(id, val){
-  var self = this;
-  sparkClient.setPin({
-    pinId: id,
-    value: val
+exports.setPin = function(coreId, pinId, pinVal){
+  var context = this;
+  var client = retrieveClient(coreId, context.params.accessToken);
+
+  client.setPin({
+    pinId: pinId,
+    value: pinVal
   }, function(err, res){
-    jsonResponder(err, res, self);
+    jsonResponder(err, res, context);
   });
 };
