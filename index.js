@@ -55,6 +55,6 @@ var routeCallback = function(err, res, context){
   context.response.end();
 };
 
-var port = process.env.port || 3000;
+var port = process.env.PORT || 3000;
 server.listen(port);
 console.log('Server now listening on', port);
