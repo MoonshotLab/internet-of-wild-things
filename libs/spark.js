@@ -1,4 +1,6 @@
+var path = require('path');
 var EE = require('events').EventEmitter;
+var needle = require('needle');
 var extend = require('xtend');
 var SparkApi = require(
   '../node_modules/spark-cli/lib/ApiClient'
@@ -8,11 +10,36 @@ var SparkApi = require(
 var Client = function(opts){
   if(!opts) opts = {};
   this.opts = opts;
+  this.baseURL = [
+    'https://api.spark.io/v1/devices/',
+    this.opts.coreId
+  ].join('');
 };
 
 
-exports.createClient = function(opts){
-  return new Client(opts);
+Client.prototype.getPin = function(opts, next){
+  var url = this.baseURL + '/getState';
+  var params = {
+    access_token: this.opts.token,
+    params: opts.pinId
+  };
+
+  needle.post(url, params, function(err, res, body){
+    if(next) next(err, body);
+  });
+};
+
+
+Client.prototype.setPin = function(opts, next){
+  var url = this.baseURL + '/setState';
+  var params = {
+    access_token: this.opts.token,
+    params: opts.pinId + ',' + opts.value
+  };
+
+  needle.post(url, params, function(err, res, body){
+    if(next) next(err, body);
+  });
 };
 
 
@@ -66,4 +93,9 @@ Client.prototype.subscribe = function(){
   );
 
   return emitter;
+};
+
+
+exports.createClient = function(opts){
+  return new Client(opts);
 };
