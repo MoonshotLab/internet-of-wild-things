@@ -87,7 +87,7 @@ void loop()
           analogStates[a] = currentState;
 
           char publishString[64];
-          sprintf(publishString, "{ pindId: A%u, state: %u }", a, currentState);
+          sprintf(publishString, "{ pinId: A%u, state: %u }", a, currentState);
           Spark.publish("input-update", publishString);
         }
       }
@@ -104,7 +104,7 @@ void loop()
           digitalStates[d] = currentState;
 
           char publishString[64];
-          sprintf(publishString, "{pindId: D%u, state: %u }", d, currentState);
+          sprintf(publishString, "{pinId: D%u, state: %u }", d, currentState);
           Spark.publish("input-update", publishString);
         }
       }
