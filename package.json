@@ -9,6 +9,9 @@
     "spark-cli": "0.3.0",
     "xtend": "^2.2.0",
     "needle": "^0.6.6",
-    "pathways": "0.0.11"
+    "pathways": "0.0.11",
+    "express": "~4.0.0",
+    "morgan": "^1.0.0",
+    "body-parser": "^1.0.1"
   }
 }
