@@ -1,6 +1,12 @@
+var http = require('http');
 var express = require('express');
+// var tweetListener = require('./libs/tweets');
+var sockets = require('./libs/sockets');
+
 var port = process.env.PORT || 3000;
 var app = express();
+var server = http.createServer(app);
+var io = require('socket.io').listen(server);
 
 app.set('port', process.env.PORT);
 app.set('views', __dirname + '/views');
@@ -11,43 +17,16 @@ app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(__dirname + '/public'));
-
-app.listen(port);
-console.log('server listening on', port);
+app.use(express.static(__dirname + '/bower_components'));
 
 
 var routes = require('./libs/routes');
-app.get('/core/:color', routes.core);
-app.get('/core/:color/watch-inputs', routes.watchInputs);
-app.get('/core/:color/control-outputs', routes.controlOutputs);
+app.get('/', routes.home);
+app.get('/core/:id', routes.core);
+app.get('/core/:id/watch-inputs', routes.watchInputs);
+app.get('/core/:id/control-outputs', routes.controlOutputs);
 
 
-// var Spark = require('./libs/spark');
-// var sparkClient = Spark.createClient({
-//   coreId: process.env.SPARK_CORE_ID,
-//   token: process.env.SPARK_CORE_TOKEN
-// });
-//
-//
-// // Listen for Tweets
-// var twitter = require('./libs/twitter');
-// var tweetClient = twitter.createClient({
-//   term: '@_joelongstreet'
-// });
-//
-// tweetClient.subscribe().on('update', function(e){
-//   var modifyPin = function(newState){
-//     client.setPin({
-//       pinId: 'D0',
-//       value: newState
-//     });
-//   };
-//
-//   if(e.text){
-//     if(e.text.indexOf('#off') != -1){
-//       modifyPinState(0);
-//     } else{
-//       modifyPinState(1);
-//     }
-//   }
-// });
+sockets.init(io);
+server.listen(port);
+console.log('server listening on', port);

@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  .container.main
+    .row
+      .col-xs-12
+        .panel.panel-default
+          .panel-heading
+            h1.panel-title Available Spark Cores
+          .panel-body
+            ul.list-group
+              each core, i in cores
+                a.list-group-item(href="core/#{core.coreId}") #{core.color} - #{core.coreId}

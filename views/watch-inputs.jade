@@ -1,13 +1,15 @@
 extends layout
 
 block content
-  h1 Watching Inputs
+  .container.main
+    .row
+      .col-xs-12
+        h1 Listening to Inputs
+    .row
+      .col-xs-6
+        h3 Button
+        h4 0
 
-  h1 Your Core id #{coreId}
-  h2 Access Token #{accessToken}
-
-  ul
-    li.d0 Button
-      span
-    li.a0 Potentiometer
-      span
+      .col-xs-6
+        h3 Potentiometer
+        h4 0

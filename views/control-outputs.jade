@@ -1,16 +1,20 @@
 extends layout
 
 block content
-  h1 Controlling Outputs
+  .container.main
+    .row
+      .col-xs-12
+        h1 Controlling Outputs
+    .row
+      .col-xs-6
+        h3 LED
+        .btn-group
+          button.btn.btn-primary#led-on(type='button') Turn LED on
+          button.btn.btn-danger#led-off(type='button') Turn LED off
 
-  h1 Your Core id #{coreId}
-  h2 Access Token #{accessToken}
-
-  ul
-    li.d0
-      a(href='#') Turn LED on
-    li.d0
-      a(href='#') Turn LED off
-    li.a0
-      input(type='text')
-      a(href='#') Set Pin
+      .col-xs-6
+        h3 Servo
+        .form
+          .form-group
+            input.form-control(type='text', placeholder='Between 0 and 4080')
+          button.btn.btn-default(type='submit') Send to Spark Core

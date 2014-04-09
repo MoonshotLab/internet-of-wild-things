@@ -1,11 +1,15 @@
 extends layout
 
-block content
-  h1 Your Core id #{coreId}
-  h2 Access Token #{accessToken}
+extends layout
 
-  ul
-    li
-      a(href="/core/#{color}/watch-inputs") Watch Inputs
-    li
-      a(href="/core/#{color}/control-outputs") Control Outputs
+block content
+  .container.main
+    .row
+      .col-xs-12
+        .panel.panel-default
+          .panel-heading
+            h1.panel-title Action
+          .panel-body
+            ul.list-group
+              a.list-group-item(href="/core/#{core.coreId}/watch-inputs") Watch Inputs
+              a.list-group-item(href="/core/#{core.coreId}/control-outputs") Control Outputs
