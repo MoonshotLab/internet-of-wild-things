@@ -14,6 +14,8 @@ var Client = function(opts){
     'https://api.spark.io/v1/devices/',
     this.opts.coreId
   ].join('');
+
+  return this;
 };
 
 

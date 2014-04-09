@@ -1,6 +1,7 @@
 var needle = require('needle');
 var Spark = require('./spark');
 var config = require('../config');
+var _ = require('lodash');
 var sparkClients = [];
 
 config.cores.forEach(function(core){
@@ -16,9 +17,14 @@ config.cores.forEach(function(core){
 
 
 var findClient = function(coreId){
-  return _.filter(sparkClients, function(client){
-    if(client.opts.coreId == coreId) return client
+  var sparkClient = null;
+
+  sparkClients.forEach(function(client){
+    if(client.opts.coreId == coreId)
+      sparkClient = client;
   });
+
+  return sparkClient;
 };
 
 
@@ -28,18 +34,18 @@ exports.getClients = function(){
 
 
 exports.setPin = function(opts, next){
-  var sparkClient = findClient(opts.coreId);
+  var sparkClient = findClient(opts.core.coreId);
 
   sparkClient.setPin({
     pinId: opts.pinId,
-    value: opts.val
+    value: opts.pinVal
   }, function(err, res){
     if(next) next(err, res);
   });
 };
 
 
-exports.getPin = function(opts){
+exports.getPin = function(opts, next){
   var sparkClient = findClient(opts.coreId);
 
   client.getPin({
