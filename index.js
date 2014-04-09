@@ -10,3 +10,15 @@ app.use(bodyParser());
 
 app.listen(port);
 console.log('server listening on', port);
+
+
+
+// Listen for Tweets
+var twitter = require('./libs/twitter');
+var tweetClient = twitter.createClient({
+  term: '@_joelongstreet'
+});
+
+tweetClient.subscribe().on('update', function(e){
+  console.log(e);
+});
