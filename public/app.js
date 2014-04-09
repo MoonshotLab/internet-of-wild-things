@@ -19,6 +19,14 @@ $(function(){
     });
   });
 
+  $('#servo-move').click(function(){
+    socket.emit('set-pin-val', {
+      core: core,
+      pinId: 'A0',
+      pinVal: $('#servo-input').val()
+    });
+  });
+
 
   // // Oage - Watch Inputs
   // socket.on('pin-update', function(data){
