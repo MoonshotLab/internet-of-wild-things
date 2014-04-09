@@ -28,10 +28,18 @@ $(function(){
   });
 
 
-  // // Oage - Watch Inputs
-  // socket.on('pin-update', function(data){
-  //   if(data.core.coreId == core.coreId){
-  //     if(data.pinVal)
-  //   }
-  // });
+  // Page - Watch Inputs
+  socket.on('input-update', function(e){
+    if(e.coreid == core.coreId){
+
+      var data = {};
+      try{
+        data = JSON.parse(e.data);
+      } catch(e){
+        if(e) console.log(e);
+      }
+
+      $('#' + data.pinId).text(data.state);
+    }
+  });
 });
