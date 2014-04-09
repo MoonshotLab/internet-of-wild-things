@@ -9,7 +9,7 @@ The firmware on the spark core is configured to accept inputs on odd pin numbers
 Setting and retrieving pin values can be accomplished via the REST API listed below.
 
 ### Pub Sub API
-There is subscription event called `update`. By subscribing to this event, your application will be immediately notified of any change to a digital or analog input. Analog inputs are broadcast whenever a threshold is met, the value can be modified within the threshold setting on the firmware.
+There is subscription event called `input-update`. By subscribing to this event, your application will be immediately notified of any change to a digital or analog input. Analog inputs are broadcast whenever a threshold is met, the value can be modified within the threshold setting on the firmware.
 
 ### REST API
 * To list all available methods:
@@ -27,7 +27,7 @@ Note that you must pass three two data params with your post request. access_tok
 
 ## Notes
 * Flash the spark with updated firmware - `spark cloud flash 51ff6f065067545728250187 duino/firmware.ino`.
-* Subscribe to all inputs - `spark subscribe update`.
+* Subscribe to all inputs - `spark subscribe input-update`.
 
 ### Todos
 * Accept a callback web hook url for each core
