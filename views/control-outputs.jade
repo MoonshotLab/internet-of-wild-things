@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1 Controlling Outputs
+
+  h1 Your Core id #{coreId}
+  h2 Access Token #{accessToken}
+
+  ul
+    li.d0
+      a(href='#') Turn LED on
+    li.d0
+      a(href='#') Turn LED off
+    li.a0
+      input(type='text')
+      a(href='#') Set Pin

@@ -10,9 +10,10 @@
     "xtend": "^2.2.0",
     "needle": "^0.6.6",
     "pathways": "0.0.11",
-    "express": "~4.0.0",
-    "morgan": "^1.0.0",
-    "body-parser": "^1.0.1",
-    "ntwitter": "^0.5.0"
+    "ntwitter": "^0.5.0",
+    "express": "^3.5.1",
+    "ejs": "^1.0.0",
+    "jade": "^1.3.1",
+    "lodash": "^2.4.1"
   }
 }

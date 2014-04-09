@@ -1,28 +1,41 @@
+var _ = require('lodash');
+var config = require('../config');
 var controller = require('./controller');
 
-var responder = function(err, res, context){
-  context.response.writeHead(200,
-    { 'Content-Type': 'text/json' }
-  );
 
-  if(err) context.response.write(JSON.stringify(err));
-  else context.response.write(JSON.stringify(res));
+var findCore = function(color){
+  var core = _.findWhere(config.cores, { color: color });
+  return core;
+}
 
-  context.response.end();
+exports.core = function(req, res){
+  var core = findCore(req.params.color);
+  res.render('core', core);
 };
 
+exports.controlOutputs = function(req, res){
+  var core = findCore(req.params.color);
+  res.render('control-outputs', core);
+};
 
-exports.home = function(){
-  this.response.writeHead(200,
-    { 'Content-Type': 'text/html' }
-  );
-
-  this.response.write('App connected...');
-  this.response.end();
+exports.watchInputs = function(req, res){
+  var core = findCore(req.params.color);
+  res.render('watch-inputs', core);
 };
 
 
 exports.pin = function(coreId, pinId){
+  var responder = function(err, res, context){
+    context.response.writeHead(200,
+      { 'Content-Type': 'text/json' }
+    );
+
+    if(err) context.response.write(JSON.stringify(err));
+    else context.response.write(JSON.stringify(res));
+
+    context.response.end();
+  };
+
   var context = this;
   var client = controller.getClient(coreId, context.params.accessToken);
 
