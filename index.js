@@ -12,6 +12,12 @@ app.listen(port);
 console.log('server listening on', port);
 
 
+var Spark = require('./libs/spark');
+var sparkClient = Spark.createClient({
+  coreId: process.env.SPARK_CORE_ID,
+  token: process.env.SPARK_CORE_TOKEN
+});
+
 
 // Listen for Tweets
 var twitter = require('./libs/twitter');
@@ -20,5 +26,18 @@ var tweetClient = twitter.createClient({
 });
 
 tweetClient.subscribe().on('update', function(e){
-  console.log(e);
+  var modifyPin = function(newState){
+    client.setPin({
+      pinId: 'D0',
+      value: newState
+    });
+  };
+
+  if(e.text){
+    if(e.text.indexOf('#off') != -1){
+      modifyPinState(0);
+    } else{
+      modifyPinState(1);
+    }
+  }
 });
