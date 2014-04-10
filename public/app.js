@@ -1,6 +1,19 @@
 var socket = io.connect('/');
 
 $(function(){
+  // Page - Core
+  $('#add-webhook').click(function(){
+    var val = $('#webhook-input').val();
+    if(!val) alert('Add a URL');
+    else{
+      socket.emit('add-webhook', {
+        core: core,
+        pinId: $('#webhook-pin'),
+        pinVal: val
+      });
+    }
+  });
+
 
   // Page - Control Outputs
   $('#led-on').click(function(){

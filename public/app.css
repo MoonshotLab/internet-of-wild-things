@@ -6,11 +6,9 @@
   float: right;
   opacity: .75;
 }
-
 .page-home span.name{
   padding-left: 3px;
 }
-
 .page-home span.color{
   width: 10px;
   height: 40px;
@@ -25,4 +23,22 @@
 /* Page - Core*/
 .page-core .nav-tabs{
   margin-bottom:20px;
+}
+.page-core .webhook-panel h4{
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 100%;
+}
+.page-core .webhook-panel label{
+  padding-top: 8px;
+  float: left;
+  font-weight: normal;
+  font-size: 90%;
+}
+.page-core .webhook-panel select{
+  width: 70%;
+  float: right;
+}
+.page-core .webhook-panel .form-group{
+  overflow: hidden;
 }

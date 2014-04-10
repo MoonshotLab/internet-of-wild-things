@@ -13,12 +13,38 @@ block content
             a(href="/core/#{core.coreId}/control-outputs") Control Outputs
 
     .row
-      .col-sm-6
+      .col-sm-6.webhook-panel
         .panel.panel-default
           .panel-heading
             h1.panel-title Web Hooks
           ul.list-group
-            li.list-group-item(href="/#") Placeholder
+            //- each webhook, i in webhooks
+            //-   li.list-group-item #{webhook.pinId} - #{webhookurl.url}
+          .panel-footer
+            h4 Add a New Webhook
+            .form-group
+              label Select A Pin
+              select.form-control
+                option(val='D0') D0
+                option(val='D1') D1
+                option(val='D2') D2
+                option(val='D3') D3
+                option(val='D4') D4
+                option(val='D5') D5
+                option(val='D6') D6
+                option(val='D7') D7
+                option(val='A0') A0
+                option(val='A1') A1
+                option(val='A2') A2
+                option(val='A3') A3
+                option(val='A4') A4
+                option(val='A5') A5
+                option(val='A6') A6
+                option(val='A7') A7
+            .input-group
+              input.form-control#webhook-input(type='text', placeholder='Webhook URL')
+              span.input-group-btn
+                button.btn.btn-default#add-webhook(type='submit') OK
       .col-sm-6
         .panel.panel-default
           .panel-heading
