@@ -76,7 +76,14 @@ exports.callWebhook = function(opts, next){
   var sparkClient = findClient(opts.coreId);
   var webhookURL = sparkClient.opts.webhooks[opts.pinId];
   if(webhookURL){
-    needle.get(webhookURL, function(err, res){
+    var formData = [
+      'pinId=',
+      opts.pinId,
+      '&pinVal=',
+      opts.pinVal
+    ].join('');
+
+    needle.post(webhookURL, formData, function(err, res){
       if(next) next(err, res);
     });
   }
