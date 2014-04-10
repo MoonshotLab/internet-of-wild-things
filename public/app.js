@@ -3,14 +3,25 @@ var socket = io.connect('/');
 $(function(){
   // Page - Core
   $('#add-webhook').click(function(){
-    var val = $('#webhook-input').val();
-    if(!val) alert('Add a URL');
+    var url = $('#webhook-input').val();
+    var pinId = $('#webhook-pin').val();
+    if(!url) alert('Add a URL');
     else{
-      socket.emit('add-webhook', {
-        core: core,
-        pinId: $('#webhook-pin'),
-        pinVal: val
+      socket.emit('create-webhook', {
+        coreId: core.coreId,
+        pinId: pinId,
+        webhookUrl: url
       });
+
+      var template = [
+        "<li class='list-group-item'>",
+          pinId,
+          " - ",
+          url,
+        "</li>"
+      ].join('');
+
+      $('#hooks-list').append(template);
     }
   });
 

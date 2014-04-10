@@ -48,7 +48,7 @@ exports.setPin = function(opts, next){
 exports.getPin = function(opts, next){
   var sparkClient = findClient(opts.coreId);
 
-  client.getPin({
+  sparkClient.getPin({
     pinId: opts.pinId
   }, function(err, res){
     if(res) res.webhooks = sparkClient.opts.webhooks;
@@ -57,7 +57,14 @@ exports.getPin = function(opts, next){
 };
 
 
-exports.setWebhook = function(opts, next){
+exports.createWebhook = function(opts, next){
+  var sparkClient = findClient(opts.coreId);
+  sparkClient.opts.webhooks[opts.pinId] = opts.webhookUrl;
+  if(next) next();
+};
+
+
+exports.destroyWebhook = function(opts, next){
   var sparkClient = findClient(opts.coreId);
 
   client.opts.webhooks[opts.pinId] = opts.webhook;
@@ -74,3 +81,6 @@ exports.callWebhook = function(opts, next){
     });
   }
 };
+
+
+exports.findById = findClient;

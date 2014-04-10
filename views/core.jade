@@ -17,14 +17,14 @@ block content
         .panel.panel-default
           .panel-heading
             h1.panel-title Web Hooks
-          ul.list-group
-            //- each webhook, i in webhooks
-            //-   li.list-group-item #{webhook.pinId} - #{webhookurl.url}
+          ul.list-group#hooks-list
+            each val, key in core.webhooks
+              li.list-group-item #{key} - #{val}
           .panel-footer
             h4 Add a New Webhook
             .form-group
               label Select A Pin
-              select.form-control
+              select.form-control#webhook-pin
                 option(val='D0') D0
                 option(val='D1') D1
                 option(val='D2') D2

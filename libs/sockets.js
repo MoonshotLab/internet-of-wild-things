@@ -27,7 +27,7 @@ exports.init = function(connector){
   io.sockets.on('connection', function(socket){
     socket.on('set-pin-val', cores.setPin);
     socket.on('get-pin-val', cores.getPin);
-    sockets.on('create-webhook', cores.setWebhook);
-    sockets.on('destroy-webhook', cores.destroyWebhook);
+    socket.on('create-webhook', cores.createWebhook);
+    socket.on('destroy-webhook', cores.destroyWebhook);
   });
 };

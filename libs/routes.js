@@ -1,10 +1,10 @@
 var _ = require('lodash');
-var config = require('../config');
+var cores = require('./cores');
 
 
 var findCore = function(id){
-  var core = _.findWhere(config.cores, { coreId: id });
-  return core;
+  var core = cores.findById(id);
+  return core.opts || {}
 }
 
 exports.home = function(req, res){
@@ -13,6 +13,7 @@ exports.home = function(req, res){
 
 exports.core = function(req, res){
   var core = findCore(req.params.id);
+  console.log(core);
   res.render('core', { core: core });
 };
 
