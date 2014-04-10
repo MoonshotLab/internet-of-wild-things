@@ -60,34 +60,17 @@ exports.getPin = function(opts, next){
 exports.setWebhook = function(opts, next){
   var sparkClient = findClient(opts.coreId);
 
-  client.opts.webhooks[pinId] = opts.webhook;
+  client.opts.webhooks[opts.pinId] = opts.webhook;
   if(next) next();
 };
 
 
-// exports.callWebhook = function(e){
-//
-//   var parsedJSON = null;
-//   try{ parsedJSON = JSON.parse(e.data); }
-//   catch(err){ console.log('error parsing json', err); }
-//
-//   if(parsedJSON){
-//     var pinId = parsedJSON.pinId;
-//     var sparkClient = null;
-//     sparkClients.forEach(function(client){
-//       if(client.opts.coreId === e.coreid) sparkClient = client;
-//     });
-//
-//     if(sparkClient){
-//       var webhookURL = sparkClient.opts.webhooks[pinId];
-//       if(webhookURL){
-//         needle.get(webhookURL, function(err, res){
-//           if(err)
-//             console.error('failed to call webhook', webhookURL, err);
-//           else
-//             console.log('called webhook', webhookURL);
-//         });
-//       }
-//     }
-//   }
-// };
+exports.callWebhook = function(opts, next){
+  var sparkClient = findClient(opts.coreId);
+  var webhookURL = sparkClient.opts.webhooks[opts.pinId];
+  if(webhookURL){
+    needle.get(webhookURL, function(err, res){
+      if(next) next(err, res);
+    });
+  }
+};

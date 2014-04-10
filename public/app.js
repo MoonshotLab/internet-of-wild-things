@@ -29,17 +29,9 @@ $(function(){
 
 
   // Page - Watch Inputs
-  socket.on('input-update', function(e){
-    if(e.coreid == core.coreId){
-
-      var data = {};
-      try{
-        data = JSON.parse(e.data);
-      } catch(e){
-        if(e) console.log(e);
-      }
-
-      $('#' + data.pinId).text(data.state);
+  socket.on('input-update', function(opts){
+    if(opts.coreId == core.coreId){
+      $('#' + data.pinId).text(opts.state);
     }
   });
 });
