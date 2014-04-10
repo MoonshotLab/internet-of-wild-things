@@ -15,7 +15,7 @@ cores.getClients().forEach(function(client){
       if(e) console.log(e);
     }
 
-    core.callWebhook(opts);
+    cores.callWebhook(opts);
     io.sockets.emit('input-update', opts);
   });
 });

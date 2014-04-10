@@ -55,7 +55,7 @@ $(function(){
   // Page - Watch Inputs
   socket.on('input-update', function(opts){
     if(opts.coreId == core.coreId){
-      $('#' + data.pinId).text(opts.state);
+      $('#' + opts.pinId).text(opts.state);
     }
   });
 });
