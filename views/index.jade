@@ -1,13 +1,16 @@
 extends layout
 
 block content
-  .container.main
+  .container.main.page-home
     .row
-      .col-xs-12
+      .col-sm-12
         .panel.panel-default
           .panel-heading
-            h1.panel-title Available Spark Cores
+            h1.panel-title Connected Spark Cores
           .panel-body
             ul.list-group
               each core, i in cores
-                a.list-group-item(href="core/#{core.coreId}") #{core.color} - #{core.coreId}
+                a.list-group-item(href="core/#{core.coreId}")
+                  span.color(style="background-color:#{core.color.toUpperCase()}")
+                  span.name #{core.color.toUpperCase()}
+                  span.core-details Core Id: #{core.coreId}

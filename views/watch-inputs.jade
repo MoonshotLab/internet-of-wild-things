@@ -3,13 +3,19 @@ extends layout
 block content
   .container.main
     .row
-      .col-xs-12
-        h1 Listening to Inputs
+      .col-sm-12
+        ul.nav.nav-tabs
+          li
+            a(href='/core/#{core.coreId}/') Core Details
+          li.active
+            a(href="/core/#{core.coreId}/watch-inputs") Watch Inputs
+          li
+            a(href="/core/#{core.coreId}/control-outputs") Control Outputs
     .row
-      .col-xs-6
-        h3 Button
+      .col-sm-4
+        h3 Digital Input 4
         h4#D4 0
 
-      .col-xs-6
-        h3 Potentiometer
+      .col-sm-4
+        h3 Analog Input 4
         h4#A4 0

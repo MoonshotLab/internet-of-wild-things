@@ -1,1 +1,28 @@
 .container.main{ padding-top: 30px; }
+
+
+/* Page - Home */
+.page-home span.core-details{
+  float: right;
+  opacity: .75;
+}
+
+.page-home span.name{
+  padding-left: 3px;
+}
+
+.page-home span.color{
+  width: 10px;
+  height: 40px;
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 4px 0 0 4px;
+}
+
+
+/* Page - Core*/
+.page-core .nav-tabs{
+  margin-bottom:20px;
+}

@@ -1,15 +1,29 @@
 extends layout
 
-extends layout
-
 block content
-  .container.main
+  .container.main.page-core
     .row
-      .col-xs-12
+      .col-sm-12
+        ul.nav.nav-tabs
+          li.active
+            a(href='/core/#{core.coreId}/') Core Details
+          li
+            a(href="/core/#{core.coreId}/watch-inputs") Watch Inputs
+          li
+            a(href="/core/#{core.coreId}/control-outputs") Control Outputs
+
+    .row
+      .col-sm-6
         .panel.panel-default
           .panel-heading
-            h1.panel-title Action
-          .panel-body
-            ul.list-group
-              a.list-group-item(href="/core/#{core.coreId}/watch-inputs") Watch Inputs
-              a.list-group-item(href="/core/#{core.coreId}/control-outputs") Control Outputs
+            h1.panel-title Web Hooks
+          ul.list-group
+            li.list-group-item(href="/#") Placeholder
+      .col-sm-6
+        .panel.panel-default
+          .panel-heading
+            h1.panel-title Core Details
+          ul.list-group
+            li.list-group-item Color: #{core.color.toUpperCase()}
+            li.list-group-item Id: #{core.coreId}
+            li.list-group-item Access Token: #{core.accessToken}

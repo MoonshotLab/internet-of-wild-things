@@ -3,17 +3,23 @@ extends layout
 block content
   .container.main
     .row
-      .col-xs-12
-        h1 Controlling Outputs
+      .col-sm-12
+        ul.nav.nav-tabs
+          li
+            a(href='/core/#{core.coreId}/') Core Details
+          li
+            a(href="/core/#{core.coreId}/watch-inputs") Watch Inputs
+          li.active
+            a(href="/core/#{core.coreId}/control-outputs") Control Outputs
     .row
-      .col-xs-6
-        h3 LED
+      .col-sm-4
+        h3 Digital Output 0
         .btn-group
           button.btn.btn-primary#led-on(type='button') Turn LED on
           button.btn.btn-danger#led-off(type='button') Turn LED off
 
-      .col-xs-6
-        h3 Servo
+      .col-sm-4
+        h3 Analog Output 0
         .form
           .form-group
             input.form-control#servo-input(type='text', placeholder='Between 0 and 4080')
