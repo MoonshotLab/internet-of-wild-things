@@ -1,11 +1,11 @@
 var _ = require('lodash');
 var cores = require('./cores');
-
+var config = require('../config');
 
 var findCore = function(id){
   var core = cores.findById(id);
-  return core.opts || {}
-}
+  return core.opts || {};
+};
 
 exports.home = function(req, res){
   res.render('index', { cores: config.cores });
