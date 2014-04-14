@@ -22,32 +22,13 @@ exports.watchInputs = function(req, res){
   });
 };
 
-
-// exports.pin = function(coreId, pinId){
-//   var responder = function(err, res, context){
-//     context.response.writeHead(200,
-//       { 'Content-Type': 'text/json' }
-//     );
-//
-//     if(err) context.response.write(JSON.stringify(err));
-//     else context.response.write(JSON.stringify(res));
-//
-//     context.response.end();
-//   };
-//
-//   var context = this;
-//   var client = controller.getClient(coreId, context.params.accessToken);
-//
-//   if(!pinId)
-//     responder({ error: 'You must specify a pin id' }, {}, context);
-//   else if(!this.params.accessToken)
-//     responder({ error: 'You must specify an access token' }, {}, context);
-//   else{
-//     if(this.params.pinVal)
-//       controller.setPin(pinId, client, context, responder);
-//     else if(this.params.webhook)
-//       controller.setWebhook(pinId, client, context, responder);
-//     else
-//       controller.getPin(pinId, client, context, responder);
-//   }
-// };
+exports.callHook = function(req, res){
+  cores.callWebhook({
+    coreId: req.params.id,
+    pinId: req.query.pinId,
+    pinVal: req.query.pinVal
+  }, function(err, body){
+    if(err) res.json({ error: err });
+    else res.json({ ok: true });
+  })
+};
