@@ -1,24 +1,26 @@
 var cores = require('./cores');
-var _ = require('lodash');
 var io = null;
 
-cores.getClients().forEach(function(client){
-  client.subscribe('input-update').on('update', function(e){
+exports.connect = function(){
+  var clients = cores.getClients();
+  clients.forEach(function(client){
+    client.subscribe('input-update').on('update', function(e){
 
-    // Convert stringed opts to JSON obj
-    var opts = {coreId: e.coreid };
-    try{
-      var data = JSON.parse(e.data);
-      opts.pinId = data.pinId;
-      opts.state = data.state;
-    } catch(e){
-      if(e) console.log(e);
-    }
+      // Convert stringed opts to JSON obj
+      var opts = {coreId: e.coreid };
+      try{
+        var data = JSON.parse(e.data);
+        opts.pinId = data.pinId;
+        opts.state = data.state;
+      } catch(e){
+        if(e) console.log(e);
+      }
 
-    cores.callWebhook(opts);
-    io.sockets.emit('input-update', opts);
+      cores.callWebhook(opts);
+      io.sockets.emit('input-update', opts);
+    });
   });
-});
+}
 
 
 exports.init = function(connector){

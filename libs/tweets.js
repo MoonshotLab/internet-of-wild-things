@@ -1,9 +1,4 @@
 var twitter = require('ntwitter');
-var Spark = require('./spark');
-var sparkClient = Spark.createClient({
-  coreId: process.env.SPARK_CORE_ID,
-  token: process.env.SPARK_CORE_TOKEN
-});
 
 var twit = new twitter({
   consumer_key: process.env.TWITTER_CONSUMER_KEY,

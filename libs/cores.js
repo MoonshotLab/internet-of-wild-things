@@ -1,10 +1,23 @@
 var needle = require('needle');
 var Spark = require('./spark');
-var config = require('../config');
-var _ = require('lodash');
+var sockets = require('./sockets');
 var sparkClients = [];
 
-config.cores.forEach(function(core){
+
+// Connect to the database, create the core clients
+var MongoClient = require('mongodb').MongoClient;
+MongoClient.connect(process.env.WILD_THANGS_DB_CONNECTOR, function(err, db){
+  if(err) throw err;
+
+  db.collection('cores').find().toArray(function(err, results){
+    results.forEach(makeClient);
+  });
+
+  sockets.connect();
+});
+
+
+var makeClient = function(core){
   var sparkClient = Spark.createClient({
     coreId: core.coreId,
     token: core.accessToken,
@@ -13,7 +26,7 @@ config.cores.forEach(function(core){
   });
 
   sparkClients.push(sparkClient);
-});
+};
 
 
 var findClient = function(coreId){
