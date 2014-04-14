@@ -57,32 +57,31 @@ $(function(){
   // Page - Control Outputs
   if($('.container.main').hasClass('page-control-outputs')){
 
-    $('#d0-on').click(function(){
+    $('.btn.digital-pin').click(function(){
+      var pinId = $(this).data('pinId');
+      var pinVal = $(this).data('pinVal');
       socket.emit('set-pin-val', {
         core: core,
-        pinId: 'D0',
-        pinVal: 1
+        pinId: pinId,
+        pinVal: pinVal
       });
     });
 
-    $('#d0-off').click(function(){
-      socket.emit('set-pin-val', {
-        core: core,
-        pinId: 'D0',
-        pinVal: 0
-      });
+    $('.analog-input').keyup(function(e){
+      if(e.keyCode == 13) setAnalogVal();
+    })
+    $('.btn.analog-pin').click(function(){
+      setAnalogVal();
     });
 
-    $('#a0-button').click(setA0Val);
-    $('#a0-input').keydown(function(e){
-      if(e.keyCode == 13) setA0Val();
-    });
-
-    var setA0Val = function(){
+    var setAnalogVal = function(){
+      var $input = $(this).parent().parent().find('input')
+      var pinId = $input.data('pinId');
+      var pinVal = $input.val();
       socket.emit('set-pin-val', {
         core: core,
-        pinId: 'A0',
-        pinVal: $('#a0-input').val()
+        pinId: pinId,
+        pinVal: pinVal
       });
     };
   }

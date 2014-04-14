@@ -28,9 +28,6 @@
 .page-core ul:empty{
   margin: 0;
 }
-.page-core .nav-tabs{
-  margin-bottom:20px;
-}
 .page-core .webhooks label{
   padding-top: 8px;
   float: left;
@@ -67,8 +64,19 @@
   margin-bottom: 64px;
 }
 
+/* Page - Control Outputs */
+.page-control-outputs #digital-outputs .btn-group{
+  float: right;
+}
+.page-control-outputs #digital-outputs li{
+  overflow: hidden;
+}
+
 
 /* Bootstrap Mod */
 .help-block{
   font-size: 85%;
+}
+.nav-tabs{
+  margin-bottom:20px;
 }
