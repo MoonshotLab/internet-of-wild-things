@@ -15,12 +15,12 @@ block content
       .col-sm-4
         h3 Digital Output 0
         .btn-group
-          button.btn.btn-primary#led-on(type='button') Turn LED on
-          button.btn.btn-danger#led-off(type='button') Turn LED off
+          button.btn.btn-default#d0-on(type='button') Turn D0 <strong>on</strong>
+          button.btn.btn-default#d0-off(type='button') Turn D0 <strong>off</strong>
 
       .col-sm-4
         h3 Analog Output 0
         .input-group
-          input.form-control#servo-input(type='text', placeholder='Between 0 and 4080')
+          input.form-control#a0-input(type='text', placeholder='Analog input value')
           span.input-group-btn
-            button.btn.btn-default#servo-move(type='submit') OK
+            button.btn.btn-default#a0-button(type='submit') OK

@@ -2,7 +2,7 @@ var socket = io.connect('/');
 
 $(function(){
   // Page - Core
-  if$('.container.main').hasClass('page-core'){
+  if($('.container.main').hasClass('page-core')){
     $('#add-webhook').click(function(){
       var url = $('#webhook-input').val();
       var pinId = $('#webhook-pin').val();
@@ -27,9 +27,11 @@ $(function(){
     });
   }
 
+
   // Page - Control Outputs
-  if$('.container.main').hasClass('page-control-outputs'){
-    $('#led-on').click(function(){
+  if($('.container.main').hasClass('page-control-outputs')){
+
+    $('#d0-on').click(function(){
       socket.emit('set-pin-val', {
         core: core,
         pinId: 'D0',
@@ -37,7 +39,7 @@ $(function(){
       });
     });
 
-    $('#led-off').click(function(){
+    $('#d0-off').click(function(){
       socket.emit('set-pin-val', {
         core: core,
         pinId: 'D0',
@@ -45,17 +47,23 @@ $(function(){
       });
     });
 
-    $('#servo-move').click(function(){
+    $('#a0-button').click(setA0Val);
+    $('#a0-input').keydown(function(e){
+      if(e.keyCode == 13) setA0Val();
+    });
+
+    var setA0Val = function(){
       socket.emit('set-pin-val', {
         core: core,
         pinId: 'A0',
-        pinVal: $('#servo-input').val()
+        pinVal: $('#a0-input').val()
       });
-    });
+    };
   }
 
+
   // Page - Watch Inputs
-  if$('.container.main').hasClass('page-watch-inputs'){
+  if($('.container.main').hasClass('page-watch-inputs')){
     socket.on('input-update', function(opts){
       if(opts.coreId == core.coreId){
         $('#' + opts.pinId).text(opts.state);
