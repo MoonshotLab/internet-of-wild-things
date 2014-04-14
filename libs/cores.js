@@ -2,6 +2,7 @@
 // held in memory. The stuff in memory has all the events
 // attached.
 
+var bootloader = require('./bootloader');
 var needle = require('needle');
 var Spark = require('./spark');
 var sockets = require('./sockets');
@@ -152,7 +153,17 @@ exports.setPinDefinitions = function(opts, next){
           pins: opts.pins
         }
       }, function(err, res){
-        // TODO - bootload the updated firmware here
+        bootloader.generateCode({
+          coreId: opts.coreId,
+          pins: opts.pins
+        }, function(err, filePath){
+          bootloader.flash({
+            accessToken: opts.accessToken,
+            coreId: opts.coreId,
+            filePath: filePath
+          })
+        });
+
         if(next) next(err, res);
     });
   });

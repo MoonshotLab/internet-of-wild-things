@@ -84,6 +84,7 @@ $(function(){
 
     socket.emit('set-pin-definitions', {
       coreId: core.coreId,
+      accessToken: core.accessToken,
       pins: pins
     });
   });

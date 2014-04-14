@@ -30,19 +30,3 @@ app.get('/core/:id/hook', routes.callHook);
 sockets.init(io);
 server.listen(port);
 console.log('server listening on', port);
-
-
-var bootloader = require('./libs/bootloader');
-bootloader.generateCode({
-  coreId: 12345,
-  digitalInputs: ['D0', 'D3'],
-  digitalOutputs: ['D1', 'D2'],
-  analogInputs: ['A6'],
-  analogOutputs: ['A7']
-}, function(err, filePath){
-  bootloader.flash({
-    accessToken: process.env.SPARK_CORE_TOKEN,
-    coreId: process.env.SPARK_CORE_ID,
-    filePath: filePath
-  })
-});

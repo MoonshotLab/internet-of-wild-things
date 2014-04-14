@@ -13,9 +13,12 @@ html
 
     script.
       var socket = io.connect('/');
-    if(core)
+    - if(core)
       script.
         var core = !{JSON.stringify(core)}
+        socket.on('flash-complete', function(){
+          alert('Your core is updated');
+        });
 
     block head
   body

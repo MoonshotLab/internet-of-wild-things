@@ -1,5 +1,6 @@
 var fs = require('fs');
 var crypto = require('crypto');
+var sockets = require('./sockets');
 var SparkApi = require(
   '../node_modules/spark-cli/lib/ApiClient'
 );
@@ -34,26 +35,44 @@ exports.flash = function(opts){
   var obj = {};
   obj[opts.filePath] = opts.filePath;
   client.flashCore(opts.coreId, obj).then(function(){
-    // TODO - Reply with socket...
+    sockets.getIo().sockets.emit('flash-complete', {
+      coreId: opts.coreId
+    });
   });
 };
 
 
 var replaceKeysWithProperties = function(opts, blob){
+  var digitalOutputs = [];
+  var digitalInputs = [];
+  var analogOutputs = [];
+  var analogInputs = [];
+
+  for(var key in opts.pins){
+    if(opts.pins[key] == 'output' && key.indexOf('D') != -1)
+      digitalOutputs.push(key);
+    else if(opts.pins[key] == 'input' && key.indexOf('D') != -1)
+      digitalInputs.push(key);
+    else if(opts.pins[key] == 'output' && key.indexOf('A') != -1)
+      analogOutputs.push(key);
+    else if(opts.pins[key] == 'input' && key.indexOf('A') != -1)
+      analogInputs.push(key);
+  }
+
   blob = blob.replace('¡¡digitalInputs¡¡',
-    '{' + opts.digitalInputs.join(',') + '}'
+    '{' + digitalInputs.join(',') + '}'
   );
 
   blob = blob.replace('¡¡digitalOutputs¡¡',
-    '{' + opts.digitalInputs.join(',') + '}'
+    '{' + digitalOutputs.join(',') + '}'
   );
 
   blob = blob.replace('¡¡analogInputs¡¡',
-    '{' + opts.analogInputs.join(',') + '}'
+    '{' + analogInputs.join(',') + '}'
   );
 
   blob = blob.replace('¡¡analogOutputs¡¡',
-    '{' + opts.analogOutputs.join(',') + '}'
+    '{' + analogOutputs.join(',') + '}'
   );
 
   blob = blob.replace('¡¡analogChangeThreshold¡¡',

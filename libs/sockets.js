@@ -34,3 +34,8 @@ exports.init = function(connector){
     socket.on('set-pin-definitions', cores.setPinDefinitions);
   });
 };
+
+
+exports.getIo = function(){
+  return io;
+}
