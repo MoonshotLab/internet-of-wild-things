@@ -3,10 +3,10 @@ var socket = io.connect('/');
 $(function(){
   // Page - Core
   if($('.container.main').hasClass('page-core')){
-    $('#add-webhook').click(function(){
-      var url = $('#webhook-input').val();
-      var pinId = $('#webhook-pin').val();
-      if(!url) alert('Add a URL');
+    $('#publish-hook-button').click(function(){
+      var url = $('#publish-hook-input').val();
+      var pinId = $('#publish-hook-pin').val();
+      if(!url) alert('Please add a URL');
       else{
         socket.emit('create-webhook', {
           coreId: core.coreId,
@@ -22,7 +22,33 @@ $(function(){
           "</li>"
         ].join('');
 
-        $('#hooks-list').append(template);
+        $('#publish-hooks-list').append(template);
+      }
+    });
+
+
+    $('#accept-hook-button').click(function(){
+      var pinVal = $('#accept-hook-input').val();
+      var pinId = $('#accept-hook-pin').val();
+      if(!pinVal) alert('Please add an input value');
+      else{
+
+        var template = [
+          "<div class='alert alert-info'>",
+            "<p>Paste this URL into the Zapier interface</p>",
+            "<strong>",
+              "http://wild-thangs.herokuapp.com/core/",
+              core.coreId,
+              "/",
+              "?pinId=",
+              pinId,
+              "&pinVal=",
+              pinVal,
+            "</strong>",
+          "</div>"
+        ].join('');
+
+        $('#accept-hook-notifier').html(template);
       }
     });
   }

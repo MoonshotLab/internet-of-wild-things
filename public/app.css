@@ -21,24 +21,45 @@
 
 
 /* Page - Core*/
+.page-core h3{
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+.page-core ul:empty{
+  margin: 0;
+}
 .page-core .nav-tabs{
   margin-bottom:20px;
 }
-.page-core .webhook-panel h4{
-  margin-top: 0;
-  margin-bottom: 15px;
-  font-size: 100%;
-}
-.page-core .webhook-panel label{
+.page-core .webhooks label{
   padding-top: 8px;
   float: left;
   font-weight: normal;
   font-size: 90%;
 }
-.page-core .webhook-panel select{
+.page-core .webhooks select{
   width: 70%;
   float: right;
 }
-.page-core .webhook-panel .form-group{
+.page-core .webhooks .form-group{
   overflow: hidden;
+}
+.page-core .help-block{
+  margin-top: 10px;
+}
+.page-core #accept-hook-notifier .alert{
+  font-size: 90%;
+  margin: -15px -15px 15px;
+  border-radius: 0 0 5px 5px;
+  -webkit-border-radius: 0 0 5px 5px;
+  -moz-border-radius: 0 0 5px 5px;
+  padding: 10px;
+  border: none;
+  word-wrap: break-word;
+}
+
+
+/* Bootstrap Mod */
+.help-block{
+  font-size: 85%;
 }

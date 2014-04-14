@@ -13,18 +13,19 @@ block content
             a(href="/core/#{core.coreId}/control-outputs") Control Outputs
 
     .row
-      .col-sm-6.webhook-panel
-        .panel.panel-default
+      .col-sm-6.webhooks
+        h3 Webhooks
+
+        .panel.panel-default.publish-hook
           .panel-heading
-            h1.panel-title Web Hooks
-          ul.list-group#hooks-list
-            each val, key in core.webhooks
-              li.list-group-item #{key} - #{val}
-          .panel-footer
-            h4 Add a New Webhook
+            h4.panel-title Publish <em><strong>hook</strong></em> to Zapier
+          .panel-body
+            ul.list-group#publish-hooks-list
+              each val, key in core.webhooks
+                li.list-group-item #{key} - #{val}
             .form-group
               label Select A Pin
-              select.form-control#webhook-pin
+              select.form-control#publish-hook-pin
                 option(val='D0') D0
                 option(val='D1') D1
                 option(val='D2') D2
@@ -42,14 +43,45 @@ block content
                 option(val='A6') A6
                 option(val='A7') A7
             .input-group
-              input.form-control#webhook-input(type='text', placeholder='Webhook URL')
+              input.form-control#publish-hook-input(type='text', placeholder='Zapier Hook URL')
               span.input-group-btn
-                button.btn.btn-default#add-webhook(type='submit') OK
-      .col-sm-6
-        .panel.panel-default
+                button.btn.btn-default#publish-hook-button(type='submit') OK
+            p.help-block Find this within the Zapier interface when creating a new Zap. If your Zap is in the form of "if something happens on my board, then do X", this is the hook for you. Should look like - https://zapier.com/hooks/catch/atdvc/
+
+        .panel.panel-default.accept-hook
           .panel-heading
-            h1.panel-title Core Details
+            h4.panel-title Accept <em><strong>hook</strong></em> from Zapier
+          .panel-body
+            #accept-hook-notifier
+            .form-group
+              label Select A Pin
+              select.form-control#accept-hook-pin
+                option(val='D0') D0
+                option(val='D1') D1
+                option(val='D2') D2
+                option(val='D3') D3
+                option(val='D4') D4
+                option(val='D5') D5
+                option(val='D6') D6
+                option(val='D7') D7
+                option(val='A0') A0
+                option(val='A1') A1
+                option(val='A2') A2
+                option(val='A3') A3
+                option(val='A4') A4
+                option(val='A5') A5
+                option(val='A6') A6
+                option(val='A7') A7
+            .input-group
+              input.form-control#accept-hook-input(type='text', placeholder='Input Value (eg. 0, 1, 124)')
+              span.input-group-btn
+                button.btn.btn-default#accept-hook-button(type='submit') OK
+            p.help-block When creating a Zap in the form of "when something happens on the internet, do something on my board", use this form to generate a hook.
+
+      .col-sm-6
+        h3 Core Details
+        .panel.panel-default
           ul.list-group
-            li.list-group-item Color: #{core.color.toUpperCase()}
-            li.list-group-item Id: #{core.coreId}
-            li.list-group-item Access Token: #{core.token}
+            li.list-group-item Color: <em>#{core.color.toUpperCase()}</em>
+            li.list-group-item Id: <em>#{core.coreId}</em>
+            li.list-group-item Access Token: <em>#{core.token}</em>
