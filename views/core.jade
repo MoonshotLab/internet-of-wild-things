@@ -78,10 +78,50 @@ block content
                 button.btn.btn-default#accept-hook-button(type='submit') OK
             p.help-block When creating a Zap in the form of "when something happens on the internet, do something on my board", use this form to generate a hook.
 
-      .col-sm-6
         h3 Core Details
         .panel.panel-default
           ul.list-group
             li.list-group-item Color: <em>#{core.color.toUpperCase()}</em>
             li.list-group-item Id: <em>#{core.coreId}</em>
             li.list-group-item Access Token: <em>#{core.token}</em>
+
+      .col-sm-6
+        h3 Define Inputs and Outputs
+        .panel.panel-default
+          table.table
+            thead
+              tr
+                th Pin Name
+                th Make Input
+                th Make Output
+                th Make Unused
+            tbody
+              +tableRow("D0")
+              +tableRow("D1")
+              +tableRow("D2")
+              +tableRow("D3")
+              +tableRow("D4")
+              +tableRow("D5")
+              +tableRow("D6")
+              +tableRow("D7")
+              +tableRow("A0")
+              +tableRow("A1")
+              +tableRow("A2")
+              +tableRow("A3")
+              +tableRow("A4")
+              +tableRow("A5")
+              +tableRow("A6")
+              +tableRow("A7")
+          .panel-footer
+            a.btn.btn-default#flash-core(href='#') Flash Core
+
+
+mixin tableRow(name)
+  tr
+    td #{name}
+    td
+      input(type='radio', name="#{name}-radio", value="input")
+    td
+      input(type='radio', name="#{name}-radio", value="output")
+    td
+      input(type='radio', name="#{name}-radio", value="unused")

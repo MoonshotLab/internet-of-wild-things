@@ -37,6 +37,12 @@
   font-weight: normal;
   font-size: 90%;
 }
+.page-core #flash-core{
+  float: right;
+}
+.page-core .panel-footer{
+  overflow: hidden;
+}
 .page-core .webhooks select{
   width: 70%;
   float: right;
@@ -50,12 +56,15 @@
 .page-core #accept-hook-notifier .alert{
   font-size: 90%;
   margin: -15px -15px 15px;
-  border-radius: 0 0 5px 5px;
-  -webkit-border-radius: 0 0 5px 5px;
-  -moz-border-radius: 0 0 5px 5px;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
   padding: 10px;
   border: none;
   word-wrap: break-word;
+}
+.page-core .panel.accept-hook{
+  margin-bottom: 64px;
 }
 
 
