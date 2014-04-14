@@ -20,7 +20,7 @@ exports.connect = function(){
       io.sockets.emit('input-update', opts);
     });
   });
-}
+};
 
 
 exports.init = function(connector){
@@ -31,5 +31,6 @@ exports.init = function(connector){
     socket.on('get-pin-val', cores.getPin);
     socket.on('create-webhook', cores.createWebhook);
     socket.on('destroy-webhook', cores.destroyWebhook);
+    socket.on('set-pin-definitions', cores.setPinDefinitions);
   });
 };

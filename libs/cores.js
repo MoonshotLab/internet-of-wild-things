@@ -143,5 +143,20 @@ exports.callWebhook = function(opts, next){
 };
 
 
+exports.setPinDefinitions = function(opts, next){
+  getRecord(opts.core.coreId, function(record){
+    db.collection('cores').update(
+      { _id: record._id },
+      { $set:
+        {
+          pins: opts.pins
+        }
+      }, function(err, res){
+        if(next) next(err, res);
+    });
+  });
+};
+
+
 exports.findById = findClient;
 exports.getRecord = getRecord;

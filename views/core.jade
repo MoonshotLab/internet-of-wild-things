@@ -95,7 +95,7 @@ block content
                 th Make Input
                 th Make Output
                 th Make Unused
-            tbody
+            tbody#pin-definitions
               +tableRow("D0")
               +tableRow("D1")
               +tableRow("D2")
@@ -113,15 +113,15 @@ block content
               +tableRow("A6")
               +tableRow("A7")
           .panel-footer
-            a.btn.btn-default#flash-core(href='#') Flash Core
+            a.btn.btn-default#flash-core(href='#') Save and Bootload Core
 
 
 mixin tableRow(name)
-  tr
+  tr(data-pinid="#{name}")
     td #{name}
     td
-      input(type='radio', name="#{name}-radio", value="input")
+      input(type='radio', id="#{name}-radio-input", name="#{name}-radio", value="input")
     td
-      input(type='radio', name="#{name}-radio", value="output")
+      input(type='radio', id="#{name}-radio-output", name="#{name}-radio", value="output")
     td
-      input(type='radio', name="#{name}-radio", value="unused")
+      input(type='radio', id="#{name}-radio-null", name="#{name}-radio", value="unused")
