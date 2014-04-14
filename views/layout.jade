@@ -6,14 +6,18 @@ html
     meta(name='viewport', content='width=device-width, initial-scale=1')
     script(src='/vendor/jquery.min.js')
     script(src='/socket.io/socket.io.js')
-    script(src='/app.js')
 
     link(rel='stylesheet', href='/vendor/bootstrap.min.css')
     link(rel='stylesheet', href='/vendor/bootstrap-theme.min.css')
     link(rel='stylesheet', href='/app.css')
+
+    script.
+      var socket = io.connect('/');
     if(core)
       script.
         var core = !{JSON.stringify(core)}
+
+    block head
   body
     #header
       .container
