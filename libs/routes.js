@@ -1,10 +1,5 @@
 var cores = require('./cores');
 
-var findCore = function(id){
-  var core = cores.findById(id);
-  return core.opts || {};
-};
-
 exports.home = function(req, res){
   res.render('index', { cores: cores.getClients() });
 };
@@ -16,13 +11,15 @@ exports.core = function(req, res){
 };
 
 exports.controlOutputs = function(req, res){
-  var core = findCore(req.params.id);
-  res.render('control-outputs', { core: core });
+  cores.getRecord(req.params.id, function(record){
+    res.render('control-outputs', { core: record });
+  });
 };
 
 exports.watchInputs = function(req, res){
-  var core = findCore(req.params.id);
-  res.render('watch-inputs', { core: core });
+  cores.getRecord(req.params.id, function(record){
+    res.render('watch-inputs', { core: record });
+  });
 };
 
 

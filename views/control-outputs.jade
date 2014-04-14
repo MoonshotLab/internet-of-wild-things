@@ -21,11 +21,15 @@ block content
       .col-sm-6
         h3 Digital Outputs
         ul.list-group#digital-outputs
-          +digitalPin('D0')
+          - for(var key in core.pins)
+            - if(key.indexOf('D') != -1 && core.pins[key] == 'output')
+              +digitalPin(key)
       .col-sm-6
         h3 Analog Outputs
         ul.list-group#analog-outputs
-          +analogPin('A0')
+          - for(var key in core.pins)
+            - if(key.indexOf('A') != -1 && core.pins[key] == 'output')
+              +analogPin(key)
 
 mixin digitalPin(pinId)
   li.list-group-item

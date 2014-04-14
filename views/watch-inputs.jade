@@ -21,15 +21,20 @@ block content
       .col-sm-6
         h3 Digital Inputs
         ul.list-group
-          +pin('D4')
+          - for(var key in core.pins)
+            - if(key.indexOf('D') != -1)
+              +pin(key)
 
       .col-sm-6
         h3 Analog Inputs
         ul.list-group
-          +pin('A4')
+          - for(var key in core.pins)
+            - if(key.indexOf('A') != -1)
+              +pin(key)
 
 
 mixin pin(pinId)
-  li.list-group-item
-    span.key= pinId
-    span.val(id="#{pinId}") 0
+  -if(core.pins[pinId] == 'input')
+    li.list-group-item
+      span.key= pinId
+      span.val(id="#{pinId}") 0
