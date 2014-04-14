@@ -63,7 +63,7 @@ exports.getClients = function(){
 
 
 exports.setPin = function(opts, next){
-  var sparkClient = findClient(opts.core.coreId);
+  var sparkClient = findClient(opts.coreId);
 
   sparkClient.setPin({
     pinId: opts.pinId,
@@ -144,7 +144,7 @@ exports.callWebhook = function(opts, next){
 
 
 exports.setPinDefinitions = function(opts, next){
-  getRecord(opts.core.coreId, function(record){
+  getRecord(opts.coreId, function(record){
     db.collection('cores').update(
       { _id: record._id },
       { $set:

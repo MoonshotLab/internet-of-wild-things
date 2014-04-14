@@ -5,7 +5,7 @@ $(function(){
     var pinId = $(this).data('pinId');
     var pinVal = $(this).data('pinVal');
     socket.emit('set-pin-val', {
-      core: core,
+      core: core.coreId,
       pinId: pinId,
       pinVal: pinVal
     });
@@ -18,7 +18,7 @@ $(function(){
     var pinId = $input.data('pinId');
     var pinVal = $input.val();
     socket.emit('set-pin-val', {
-      core: core,
+      coreId: core.coreId,
       pinId: pinId,
       pinVal: pinVal
     });

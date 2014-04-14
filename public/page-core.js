@@ -83,7 +83,7 @@ $(function(){
     });
 
     socket.emit('set-pin-definitions', {
-      core: core,
+      coreId: core.coreId,
       pins: pins
     });
   });
