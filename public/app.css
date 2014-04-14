@@ -72,6 +72,15 @@
   overflow: hidden;
 }
 
+/* Page - Watch Inputs */
+.page-watch-inputs span.val{
+  float: right;
+  font-weight: bold;
+}
+.page-watch-inputs li.list-group-item{
+  overflow: hidden;
+}
+
 
 /* Bootstrap Mod */
 .help-block{

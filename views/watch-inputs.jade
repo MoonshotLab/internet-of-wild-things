@@ -12,10 +12,21 @@ block content
           li
             a(href="/core/#{core.coreId}/control-outputs") Control Outputs
     .row
-      .col-sm-4
-        h3 Digital Input 4
-        h4#D4 0
+      .col-sm-12
+        p Watch for changes in your digital and analog outputs. If you're not seeing any inputs or outputs listed below, please make sure you've configured some by visiting your <a href="/core/#{core.coreId}/">Core Details page</a> . If you're not seeing any data come through, you might be <em>rate limited</em>. Make sure all your inputs and outputs are plugged in correctly and try again.
+    .row
+      .col-sm-6
+        h3 Digital Inputs
+        ul.list-group
+          +pin('D4')
 
-      .col-sm-4
-        h3 Analog Input 4
-        h4#A4 0
+      .col-sm-6
+        h3 Analog Inputs
+        ul.list-group
+          +pin('A4')
+
+
+mixin pin(pinId)
+  li.list-group-item
+    span.key= pinId
+    span.val(id="#{pinId}") 0
