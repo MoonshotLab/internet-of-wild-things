@@ -1,10 +1,6 @@
 $(function(){
 
   // Publish Hooks
-  $('#publish-hook-button').click(setupPublishHook);
-  $('#publish-hook-input').keyup(function(e){
-    if(e.keyCode == 13) setupPublishHook();
-  });
   var setupPublishHook = function(){
     var url = $('#publish-hook-input').val();
     var pinId = $('#publish-hook-pin').val();
@@ -27,13 +23,13 @@ $(function(){
       $('#publish-hooks-list').append(template);
     }
   };
+  $('#publish-hook-button').click(setupPublishHook);
+  $('#publish-hook-input').keyup(function(e){
+    if(e.keyCode == 13) setupPublishHook();
+  });
 
 
   // Accept Hooks
-  $('#accept-hook-button').click(setupAcceptHook);
-  $('#accept-hook-input').keyup(function(e){
-    if(e.keyCode == 13) setupAcceptHook();
-  });
   var setupAcceptHook = function(){
     var pinVal = $('#accept-hook-input').val();
     var pinId = $('#accept-hook-pin').val();
@@ -46,11 +42,13 @@ $(function(){
           "<strong>",
             "http://wild-thangs.herokuapp.com/core/",
             core.coreId,
-            "/",
+            "/hook",
             "?pinId=",
             pinId,
             "&pinVal=",
             pinVal,
+            "&accessToken=",
+            core.accessToken,
           "</strong>",
         "</div>"
       ].join('');
@@ -58,6 +56,10 @@ $(function(){
       $('#accept-hook-notifier').html(template);
     }
   };
+  $('#accept-hook-button').click(setupAcceptHook);
+  $('#accept-hook-input').keyup(function(e){
+    if(e.keyCode == 13) setupAcceptHook();
+  });
 
 
   // Flash Core and setup pins
