@@ -1,13 +1,19 @@
+// A record is the DB record, a client is the core object
+// held in memory. The stuff in memory has all the events
+// attached.
+
 var needle = require('needle');
 var Spark = require('./spark');
 var sockets = require('./sockets');
+var db = null;
 var sparkClients = [];
 
 
 // Connect to the database, create the core clients
 var MongoClient = require('mongodb').MongoClient;
-MongoClient.connect(process.env.WILD_THANGS_DB_CONNECTOR, function(err, db){
+MongoClient.connect(process.env.WILD_THANGS_DB_CONNECTOR, function(err, client){
   if(err) throw err;
+  db = client;
 
   db.collection('cores').find().toArray(function(err, results){
     results.forEach(makeClient);
@@ -17,8 +23,18 @@ MongoClient.connect(process.env.WILD_THANGS_DB_CONNECTOR, function(err, db){
 });
 
 
+var getRecord = function(coreId, next){
+  db.collection('cores').find().toArray(function(err, records){
+    records.forEach(function(record){
+      if(record.coreId == coreId) next(record);
+    });
+  });
+};
+
+
 var makeClient = function(core){
   var sparkClient = Spark.createClient({
+    id: core._id,
     coreId: core.coreId,
     token: core.accessToken,
     webhooks: {},
@@ -72,35 +88,60 @@ exports.getPin = function(opts, next){
 
 exports.createWebhook = function(opts, next){
   var sparkClient = findClient(opts.coreId);
-  sparkClient.opts.webhooks[opts.pinId] = opts.webhookUrl;
-  if(next) next();
+  getRecord(opts.coreId, function(record){
+    var webhooks = record.webhooks;
+    webhooks[opts.pinId] = opts.webhookUrl;
+
+    db.collection('cores').update(
+      { _id: record._id },
+      { $set:
+        {
+          webhooks: webhooks
+        }
+      }, function(err, res){
+        if(next) next(err, res);
+    });
+  });
 };
 
 
 exports.destroyWebhook = function(opts, next){
-  var sparkClient = findClient(opts.coreId);
+  getRecord(opts.coreId, function(record){
+    var webhooks = record.webhooks;
+    delete webhooks[opts.pinId];
 
-  client.opts.webhooks[opts.pinId] = opts.webhook;
-  if(next) next();
+    db.collection('cores').update(
+      { _id: record._id },
+      { $set:
+        {
+          webhooks: webhooks
+        }
+      }, function(err, res){
+        if(next) next(err, res);
+    });
+  });
 };
 
 
 exports.callWebhook = function(opts, next){
-  var sparkClient = findClient(opts.coreId);
-  var webhookURL = sparkClient.opts.webhooks[opts.pinId];
-  if(webhookURL){
-    var formData = [
-      'pinId=',
-      opts.pinId,
-      '&pinVal=',
-      opts.pinVal
-    ].join('');
+  getRecord(opts.coreId, function(record){
+    var webhookURL = record.webhooks[opts.pinId];
 
-    needle.post(webhookURL, formData, function(err, res){
-      if(next) next(err, res);
-    });
-  }
+    if(webhookURL){
+      var formData = [
+        'pinId=',
+        opts.pinId,
+        '&pinVal=',
+        opts.pinVal
+      ].join('');
+
+      needle.post(webhookURL, formData, function(err, res){
+        if(next) next(err, res);
+      });
+    }
+  });
 };
 
 
 exports.findById = findClient;
+exports.getRecord = getRecord;

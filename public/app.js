@@ -3,7 +3,8 @@ var socket = io.connect('/');
 $(function(){
   // Page - Core
   if($('.container.main').hasClass('page-core')){
-    $('#publish-hook-button').click(function(){
+
+    var setupPublishHook = function(){
       var url = $('#publish-hook-input').val();
       var pinId = $('#publish-hook-pin').val();
       if(!url) alert('Please add a URL');
@@ -24,10 +25,14 @@ $(function(){
 
         $('#publish-hooks-list').append(template);
       }
+    };
+
+    $('#publish-hook-input').keyup(function(e){
+      if(e.keyCode == 13) setupPublishHook();
     });
+    $('#publish-hook-button').click(setupPublishHook);
 
-
-    $('#accept-hook-button').click(function(){
+    var setupAcceptHook = function(){
       var pinVal = $('#accept-hook-input').val();
       var pinId = $('#accept-hook-pin').val();
       if(!pinVal) alert('Please add an input value');
@@ -50,6 +55,11 @@ $(function(){
 
         $('#accept-hook-notifier').html(template);
       }
+    };
+
+    $('#accept-hook-button').click(setupAcceptHook);
+    $('#accept-hook-input').keyup(function(e){
+      if(e.keyCode == 13) setupAcceptHook();
     });
   }
 

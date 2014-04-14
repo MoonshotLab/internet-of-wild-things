@@ -10,8 +10,9 @@ exports.home = function(req, res){
 };
 
 exports.core = function(req, res){
-  var core = findCore(req.params.id);
-  res.render('core', { core: core });
+  cores.getRecord(req.params.id, function(record){
+    res.render('core', { core: record });
+  });
 };
 
 exports.controlOutputs = function(req, res){
