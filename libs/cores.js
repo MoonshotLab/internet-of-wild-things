@@ -152,6 +152,7 @@ exports.setPinDefinitions = function(opts, next){
           pins: opts.pins
         }
       }, function(err, res){
+        // TODO - bootload the updated firmware here
         if(next) next(err, res);
     });
   });
