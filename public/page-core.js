@@ -89,4 +89,14 @@ $(function(){
     });
   });
 
+
+  // Reset Pins
+  $('#reset').click(function(e){
+    e.preventDefault();
+    $('#pin-definitions').find('tr').each(function(){
+      var $radios = $(this).find('input');
+      $radios.filter('[value=unused]').prop('checked', true);
+    });
+  });
+
 });
