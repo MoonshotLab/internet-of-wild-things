@@ -2,10 +2,10 @@ $(function(){
 
   // Handle digital cases
   $('.btn.digital-pin').click(function(){
-    var pinId = $(this).data('pinId');
-    var pinVal = $(this).data('pinVal');
+    var pinId = $(this).data('pinid');
+    var pinVal = $(this).data('pinval');
     socket.emit('set-pin-val', {
-      core: core.coreId,
+      coreId: core.coreId,
       pinId: pinId,
       pinVal: pinVal
     });
@@ -13,10 +13,11 @@ $(function(){
 
 
   // Handle analog cases
-  var setAnalogVal = function(){
-    var $input = $(this).parent().parent().find('input')
-    var pinId = $input.data('pinId');
+  var setAnalogVal = function($context){
+    var $input = $context.parent().parent().find('input')
+    var pinId = $input.data('pinid');
     var pinVal = $input.val();
+
     socket.emit('set-pin-val', {
       coreId: core.coreId,
       pinId: pinId,
@@ -25,8 +26,11 @@ $(function(){
   };
 
   $('.analog-input').keyup(function(e){
-    if(e.keyCode == 13) setAnalogVal();
+    if(e.keyCode == 13)
+      setAnalogVal($(this).parent().find('button'));
   })
-  $('.btn.analog-pin').click(setAnalogVal);
+  $('.btn.analog-pin').click(function(){
+    setAnalogVal($(this));
+  });
 
 });

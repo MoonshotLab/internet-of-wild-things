@@ -36,12 +36,12 @@ mixin digitalPin(pinId)
     span
       strong= pinId
     .btn-group
-      button.btn.btn-default.digital-pin(type='button', data-pinId="#{pinId}", data-pinVal="on") On
-      button.btn.btn-default.digital-pin(type='button', data-pinId="#{pinId}", data-pinVal="off") Off
+      button.btn.btn-default.digital-pin(type='button', data-pinId="#{pinId}", data-pinVal="1") On
+      button.btn.btn-default.digital-pin(type='button', data-pinId="#{pinId}", data-pinVal="0") Off
 
 mixin analogPin(pinId)
   li.list-group-item
     .input-group
-      input.form-control.analog-input(type='text', placeholder="#{pinId} value", data-pinId="#{pindId}")
+      input.form-control.analog-input(type='text', placeholder="#{pinId} value", data-pinId="#{pinId}")
       span.input-group-btn
-        button.btn.btn-default.nalog-pin(type='submit') OK
+        button.btn.btn-default.analog-pin(type='submit') OK

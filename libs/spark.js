@@ -36,8 +36,10 @@ Client.prototype.setPin = function(opts, next){
   var url = this.baseURL + '/setState';
   var params = {
     access_token: this.opts.token,
-    params: opts.pinId + ',' + opts.value
+    params: opts.pinId + ',' + opts.pinVal
   };
+
+  console.log(params);
 
   needle.post(url, params, function(err, res, body){
     if(next) next(err, body);

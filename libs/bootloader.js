@@ -9,7 +9,7 @@ var SparkApi = require(
 exports.generateCode = function(opts, next){
   opts.analogChangeThreshold = 5;
 
-  fs.readFile('./duino/template.duino', 'utf8', function(err, data){
+  fs.readFile('./duino/template.ino', 'utf8', function(err, data){
     var fileContents = replaceKeysWithProperties(opts, data);
     var currentDate = new Date().valueOf().toString();
     var fileName = crypto.createHash('sha1')
@@ -44,6 +44,7 @@ var replaceKeysWithProperties = function(opts, blob){
   var digitalOutputs = [];
   var digitalInputs = [];
   var digitalInputRefs = [];
+  var digitalInputStates = [];
   var analogOutputs = [];
   var analogInputs = [];
   var analogInputRefs = [];
@@ -62,6 +63,7 @@ var replaceKeysWithProperties = function(opts, blob){
 
   digitalInputs.forEach(function(input){
     digitalInputRefs.push(input.replace('D', ''));
+    digitalInputStates.push(0);
   });
   analogInputs.forEach(function(input){
     analogInputStates.push(0);
@@ -86,6 +88,9 @@ var replaceKeysWithProperties = function(opts, blob){
 
   blob = blob.replace('¡¡analogInputStates¡¡',
     '{' + analogInputStates.join(',') + '}'
+  );
+  blob = blob.replace('¡¡digitalInputStates¡¡',
+    '{' + digitalInputStates.join(',') + '}'
   );
 
   if(analogInputRefs.length){

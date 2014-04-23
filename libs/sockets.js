@@ -3,7 +3,9 @@ var io = null;
 
 exports.connect = function(){
   var clients = cores.getClients();
+  console.log(clients);
   clients.forEach(function(client){
+
     client.subscribe('input-update').on('update', function(e){
 
       // Convert stringed opts to JSON obj

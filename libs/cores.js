@@ -20,7 +20,11 @@ MongoClient.connect(process.env.WILD_THANGS_DB_CONNECTOR, function(err, client){
     results.forEach(makeClient);
   });
 
-  sockets.connect();
+  // UGHHHHHHHHHHHHH I don't know why THIS IS NEEDED!!!!?!?!
+  setTimeout(function(){
+    sockets.connect();
+  }, 3000);
+
 });
 
 
@@ -68,7 +72,7 @@ exports.setPin = function(opts, next){
 
   sparkClient.setPin({
     pinId: opts.pinId,
-    value: opts.pinVal
+    pinVal: opts.pinVal
   }, function(err, res){
     if(next) next(err, res);
   });

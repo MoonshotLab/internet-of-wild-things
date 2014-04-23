@@ -9,6 +9,7 @@ int digitalInputs[] = {D4};
 int digitalOutputs[] = {D0};
 
 int analogInputStates[] = {0, 0};
+int digitalInputStates[] = {0};
 
 unsigned long lastLoop = 0UL;
 
@@ -104,9 +105,13 @@ void loop(){
   // states if they've changed since the previous
   // event loop
   for(int i=0; i<sizeof(digitalInputs)/sizeof(int); i++){
-    if(digitalRead(digitalInputs[i]) == 1){
+
+    int currentState = digitalRead(digitalInputs[i]);
+    if(currentState != digitalInputStates[i]){
+      digitalInputStates[i] = currentState;
+
       char publishString[64];
-      sprintf(publishString, "{ \"pinId\": \"D%c\", \"state\": %u }", digitalInputRefs[i], 1);
+      sprintf(publishString, "{ \"pinId\": \"D%c\", \"state\": %u }", digitalInputRefs[i], currentState);
       Spark.publish("input-update", publishString);
       delay(1000);
     }

@@ -9,6 +9,7 @@ int digitalInputs[] = ¡¡digitalInputs¡¡;
 int digitalOutputs[] = ¡¡digitalOutputs¡¡;
 
 int analogInputStates[] = ¡¡analogInputStates¡¡;
+int digitalInputStates[] = ¡¡digitalInputStates¡¡;
 
 
 // Web service which sets a new state
@@ -103,9 +104,12 @@ void loop(){
   // states if they've changed since the previous
   // event loop
   for(int i=0; i<sizeof(digitalInputs)/sizeof(int); i++){
-    if(digitalRead(digitalInputs[i]) == 1){
+    int currentState = digitalRead(digitalInputs[i]);
+    if(currentState != digitalInputStates[i]){
+      digitalInputStates[i] = currentState;
+
       char publishString[64];
-      sprintf(publishString, "{ \"pinId\": \"D%c\", \"state\": %u }", digitalInputRefs[i], 1);
+      sprintf(publishString, "{ \"pinId\": \"D%c\", \"state\": %u }", digitalInputRefs[i], currentState);
       Spark.publish("input-update", publishString);
       delay(1000);
     }
