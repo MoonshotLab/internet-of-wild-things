@@ -142,9 +142,6 @@ exports.callWebhook = function(opts, next){
         opts.pinVal
       ].join('');
 
-      console.log(formData);
-      console.log(webhookURL);
-
       needle.post(webhookURL, formData, function(err, res){
         if(next) next(err, res);
       });

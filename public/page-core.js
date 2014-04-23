@@ -41,7 +41,7 @@ $(function(){
 
       var template = [
         "<div class='alert alert-info'>",
-          "<p>Paste this URL into the Zapier interface</p>",
+          "<p>Paste this URL into the Zapier interface, make sure to select 'GET'</p>",
           "<strong>",
             "http://wild-thangs.herokuapp.com/core/",
             core.coreId,
