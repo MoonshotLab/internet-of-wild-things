@@ -129,6 +129,8 @@ exports.destroyWebhook = function(opts, next){
 
 
 exports.callWebhook = function(opts, next){
+  if(opts.state != undefined) opts.pinVal = opts.state;
+
   getRecord(opts.coreId, function(record){
     var webhookURL = record.webhooks[opts.pinId];
 
@@ -139,6 +141,9 @@ exports.callWebhook = function(opts, next){
         '&pinVal=',
         opts.pinVal
       ].join('');
+
+      console.log(formData);
+      console.log(webhookURL);
 
       needle.post(webhookURL, formData, function(err, res){
         if(next) next(err, res);
