@@ -28,7 +28,5 @@ Note that you must pass three two data params with your post request. access_tok
 
 
 ### Todos
-* Params probably don't get passed back to Zapier?
-* I'm so confused about how the webhooks work...
 * The Core does not actually bootload. need to make this work for real
 * Make this readme way better

@@ -24,6 +24,7 @@ app.get('/', routes.home);
 app.get('/core/:id', routes.core);
 app.get('/core/:id/watch-inputs', routes.watchInputs);
 app.get('/core/:id/control-outputs', routes.controlOutputs);
+app.get('/core/:id/setPin', routes.setPin);
 app.get('/core/:id/hook', routes.callHook);
 
 

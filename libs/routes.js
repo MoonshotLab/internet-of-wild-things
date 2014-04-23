@@ -22,6 +22,16 @@ exports.watchInputs = function(req, res){
   });
 };
 
+exports.setPin = function(req, res){
+  cores.setPin({
+    coreId: req.params.id,
+    pinId: req.query.pinId,
+    pinVal: req.query.pinVal
+  });
+
+  res.json({ok: true});
+};
+
 exports.callHook = function(req, res){
   cores.callWebhook({
     coreId: req.params.id,

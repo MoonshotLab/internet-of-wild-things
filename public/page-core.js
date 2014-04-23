@@ -45,13 +45,11 @@ $(function(){
           "<strong>",
             "http://wild-thangs.herokuapp.com/core/",
             core.coreId,
-            "/hook",
+            "/setPin",
             "?pinId=",
             pinId,
             "&pinVal=",
             pinVal,
-            "&accessToken=",
-            core.accessToken,
           "</strong>",
         "</div>"
       ].join('');
