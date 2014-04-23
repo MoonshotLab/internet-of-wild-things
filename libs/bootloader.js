@@ -9,7 +9,7 @@ var SparkApi = require(
 exports.generateCode = function(opts, next){
   opts.analogChangeThreshold = 5;
 
-  fs.readFile('./duino/template.c', 'utf8', function(err, data){
+  fs.readFile('./duino/template.duino', 'utf8', function(err, data){
     var fileContents = replaceKeysWithProperties(opts, data);
     var currentDate = new Date().valueOf().toString();
     var fileName = crypto.createHash('sha1')
