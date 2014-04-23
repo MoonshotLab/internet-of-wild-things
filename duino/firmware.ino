@@ -76,7 +76,7 @@ void setup(){
   Spark.function("setState", setState);
 }
 
-int x = 0;
+
 void loop(){
   unsigned long now = millis();
 

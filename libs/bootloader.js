@@ -45,8 +45,11 @@ exports.flash = function(opts){
 var replaceKeysWithProperties = function(opts, blob){
   var digitalOutputs = [];
   var digitalInputs = [];
+  var digitalInputRefs = [];
   var analogOutputs = [];
   var analogInputs = [];
+  var analogInputRefs = [];
+  var analogInputStates = [];
 
   for(var key in opts.pins){
     if(opts.pins[key] == 'output' && key.indexOf('D') != -1)
@@ -58,6 +61,14 @@ var replaceKeysWithProperties = function(opts, blob){
     else if(opts.pins[key] == 'input' && key.indexOf('A') != -1)
       analogInputs.push(key);
   }
+
+  digitalInputs.forEach(function(input){
+    digitalInputRefs.push(input.replace('D', ''));
+  });
+  analogInputs.forEach(function(input){
+    analogInputStates.push(0);
+    analogInputRefs.push(input.replace('A', ''));
+  });
 
   blob = blob.replace('¡¡digitalInputs¡¡',
     '{' + digitalInputs.join(',') + '}'
@@ -74,6 +85,24 @@ var replaceKeysWithProperties = function(opts, blob){
   blob = blob.replace('¡¡analogOutputs¡¡',
     '{' + analogOutputs.join(',') + '}'
   );
+
+  blob = blob.replace('¡¡analogInputStates¡¡',
+    '{' + analogInputStates.join(',') + '}'
+  );
+
+  if(analogInputRefs.length){
+    blob = blob.replace('¡¡analogInputRefs¡¡',
+      '{\'' + analogInputRefs.join('\',\'') + '\'}'
+    );
+  } else
+    blob = blob.replace('¡¡analogInputRefs¡¡', '{}');
+
+  if(digitalInputRefs.length){
+    blob = blob.replace('¡¡digitalInputRefs¡¡',
+      '{\'' + digitalInputRefs.join('\',\'') + '\'}'
+    );
+  } else
+    blob = blob.replace('¡¡digitalInputRefs¡¡', '{}');
 
   blob = blob.replace('¡¡analogChangeThreshold¡¡',
      opts.analogChangeThreshold

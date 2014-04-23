@@ -1,121 +1,113 @@
 int analogChangeThreshold = ¡¡analogChangeThreshold¡¡;
 
-int digitalInputs[] = ¡¡digitalInputs¡¡;
-int digitalOutputs[] = ¡¡digitalOutputs¡¡;
+char analogInputRefs[] = ¡¡analogInputRefs¡¡;
+char digitalInputRefs[] = ¡¡digitalInputRefs¡¡;
 
 int analogInputs[] = ¡¡analogInputs¡¡;
 int analogOutputs[] = ¡¡analogOutputs¡¡;
+int digitalInputs[] = ¡¡digitalInputs¡¡;
+int digitalOutputs[] = ¡¡digitalOutputs¡¡;
 
-int digitalInputStates[] = {0,0,0,0,0,0,0,0};
-int analogInputStates[] = {0,0,0,0,0,0,0,0};
-
-
-// Web service which returns boolean or
-// analog read value
-int getState(String param)
-{
-  int pinNumber = param.charAt(1) - '0';
-  char pinType = param.charAt(0);
-
-  if(pinType == 'D'){
-    int pin = digitalPins[pinNumber];
-    return digitalRead(pin);
-  } else if(pinType == 'A'){
-    int pin = analogPins[pinNumber];
-    return analogRead(pin);
-  }
-}
+int analogInputStates[] = ¡¡analogInputStates¡¡;
 
 
 // Web service which sets a new state
 // to a specified pin and returns the
 // new value
-int setState(String param)
+int setState(String command)
 {
-  int pinNumber = param.charAt(1) - '0';
-  char pinType = param.charAt(0);
+  // param parsing
+  char pinType = command.charAt(0);
+  int pinRef = command.charAt(1) - '0';
+  String pinValString = command.substring(3, command.length());
+  int pinVal = atoi(pinValString.c_str());
 
-  String stringState = param.substring(3, param.length());
-  int state = stringState.toInt();
+  if(pinType == 'D')
+    digitalWrite(pinRef, pinVal);
+  else{
+    char publishString[64];
 
-  if(pinType == 'D'){
-    int pin = digitalPins[pinNumber];
-    digitalWrite(pin, state);
-  } else if(pinType == 'A'){
-    int pin = analogPins[pinNumber];
-    analogWrite(pin, state);
+    // just fuck it all
+    if(command.charAt(1) == '0')
+      analogWrite(A0, pinVal);
+    if(command.charAt(1) == '1')
+      analogWrite(A1, pinVal);
+    if(command.charAt(1) == '2'){
+      analogWrite(A2, pinVal);
+      sprintf(publishString, "{ \"pinId\": \"A%c\", \"state\": %u }", command.charAt(1), pinVal);
+      Spark.publish("receive-test", publishString);
+    }
+    if(command.charAt(1) == '3')
+      analogWrite(A3, pinVal);
+    if(command.charAt(1) == '4')
+      analogWrite(A4, pinVal);
+    if(command.charAt(1) == '5')
+      analogWrite(A5, pinVal);
+    if(command.charAt(1) == '6')
+      analogWrite(A6, pinVal);
+    if(command.charAt(1) == '7')
+      analogWrite(A7, pinVal);
   }
 
-  return state;
+  return 1;
 }
 
 
-void setup()
-{
-  // Setup default pin modes. Odds are inputs,
-  // evens are outputs
-  for(int a=0; a<8; a++){
-    if(a%2 == 1){
-      pinMode(analogPins[a], INPUT);
-    } else pinMode(analogPins[a], OUTPUT);
-  }
 
-  for(int d=0; d<8; d++){
-    if(d%2 == 1){
-      pinMode(digitalPins[d], INPUT);
-    } else pinMode(digitalPins[d], OUTPUT);
+void setup(){
+  // Loop over analogs inputs and outputs,
+  // setting each one appropriately
+  for(int i=0; i<sizeof(digitalInputs)/sizeof(int); i++){
+    pinMode(digitalInputs[i], INPUT);
+  }
+  for(int i=0; i<sizeof(digitalOutputs)/sizeof(int); i++){
+    pinMode(digitalOutputs[i], OUTPUT);
+  }
+  for(int i=0; i<sizeof(analogOutputs)/sizeof(int); i++){
+    pinMode(analogOutputs[i], OUTPUT);
+  }
+  for(int i=0; i<sizeof(analogInputs)/sizeof(int); i++){
+    pinMode(analogInputs[i], INPUT);
   }
 
   // "API" Methods
-  Spark.function("getState", getState);
   Spark.function("setState", setState);
 }
 
 
-unsigned long lastTime = 0UL;
-void loop()
-{
+unsigned long lastLoop = 0UL;
+void loop(){
   unsigned long now = millis();
 
-  if(now-lastTime>5000UL){
-    Spark.publish("polling", "polling");
-  }
 
-  if(now-lastTime>100UL){
-    lastTime = now;
+  if(now-lastLoop > 1000UL){
+    lastLoop = now;
 
     // Loop over the analog inputs and publish the read
     // states if they've changed "enough" since the
     // previous event loop
-    for(int a=0; a<8; a++){
-      if(a%2 == 1){
-        int currentState = analogRead(analogPins[a]);
+    for(int i=0; i<sizeof(analogInputs)/sizeof(int); i++){
+      int currentState = analogRead(analogInputs[i]);
 
-        if(abs(analogStates[a] - currentState) > analogChangeThreshold){
-          analogStates[a] = currentState;
+      if(abs(analogInputStates[i] - currentState) > analogChangeThreshold){
+        analogInputStates[i] = currentState;
 
-          char publishString[64];
-          sprintf(publishString, "{ \"pinId\": \"A%u\", \"state\": %u }", d, currentState);
-          Spark.publish("input-update", publishString);
-        }
+        char publishString[64];
+        sprintf(publishString, "{ \"pinId\": \"A%c\", \"state\": %u }", analogInputRefs[i], currentState);
+        Spark.publish("input-update", publishString);
       }
     }
+  }
 
-    // Loop over the digital inputs and publish the read
-    // states if they've changed since the previous
-    // event loop
-    for(int d=0; d<8; d++){
-      if(d%2 == 1){
-        int currentState = digitalRead(digitalPins[d]);
-
-        if(currentState != digitalStates[d]){
-          digitalStates[d] = currentState;
-
-          char publishString[64];
-          sprintf(publishString, "{ \"pinId\": \"D%u\", \"state\": %u }", d, currentState);
-          Spark.publish("input-update", publishString);
-        }
-      }
+  // Loop over the digital inputs and publish the read
+  // states if they've changed since the previous
+  // event loop
+  for(int i=0; i<sizeof(digitalInputs)/sizeof(int); i++){
+    if(digitalRead(digitalInputs[i]) == 1){
+      char publishString[64];
+      sprintf(publishString, "{ \"pinId\": \"D%c\", \"state\": %u }", digitalInputRefs[i], 1);
+      Spark.publish("input-update", publishString);
+      delay(1000);
     }
   }
 }
