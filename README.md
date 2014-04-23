@@ -24,11 +24,11 @@ Note that you must pass two form data params with your post request. `access_tok
 `https://api.spark.io/v1/devices/{deviceId}/setState`
 Note that you must pass three two data params with your post request. access_token={accessToken} params={pinType}{PinNumber},{pinValue}
 
-
-## Notes
-* Flash the spark with updated firmware - `spark cloud flash 51ff6f065067545728250187 duino/firmware.ino`.
 * Subscribe to all inputs - `spark subscribe input-update`.
 
+
 ### Todos
-* Accept a callback web hook url for each core
-* Debug analog input problems
+* Params probably don't get passed back to Zapier?
+* I'm so confused about how the webhooks work...
+* The Core does not actually bootload. need to make this work for real
+* Make this readme way better
