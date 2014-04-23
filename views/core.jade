@@ -26,6 +26,7 @@ block content
             ul.list-group#publish-hooks-list
               each val, key in core.webhooks
                 li.list-group-item #{key} - #{val}
+                  a.delete-hook(href='#', data-pinid="#{key}") &times;
             .form-group
               label Select A Pin
               select.form-control#publish-hook-pin

@@ -17,6 +17,9 @@ $(function(){
           pinId,
           " - ",
           url,
+          "<a class='delete-hook' href='#' data-pinid='" + pinId + "'>",
+            "&times;",
+          "</a>",
         "</li>"
       ].join('');
 
@@ -97,6 +100,20 @@ $(function(){
       var $radios = $(this).find('input');
       $radios.filter('[value=unused]').prop('checked', true);
     });
+  });
+
+  // Delete Hook
+  $('ul#publish-hooks-list').click(function(e){
+    e.preventDefault();
+    var $target = $(e.target);
+    if($target[0].tagName == 'A'){
+      var pinId = $target.data('pinid');
+      socket.emit('destroy-webhook', {
+        coreId: core.coreId,
+        pinId: pinId
+      });
+      $target.parent().remove();
+    }
   });
 
 });
