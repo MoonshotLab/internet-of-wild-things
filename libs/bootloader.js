@@ -32,9 +32,7 @@ exports.flash = function(opts){
     opts.accessToken
   );
 
-  var obj = {};
-  obj[opts.filePath] = opts.filePath;
-  client.flashCore(opts.coreId, obj).then(function(){
+  client.flashCore(opts.coreId, {file : opts.filePath}).then(function(){
     sockets.getIo().sockets.emit('flash-complete', {
       coreId: opts.coreId
     });

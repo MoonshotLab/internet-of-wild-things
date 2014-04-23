@@ -28,5 +28,4 @@ Note that you must pass three two data params with your post request. access_tok
 
 
 ### Todos
-* The Core does not actually bootload. need to make this work for real
 * Make this readme way better
