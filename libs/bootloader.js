@@ -29,7 +29,7 @@ exports.generateCode = function(opts, next){
 exports.flash = function(opts){
   var client = new SparkApi(
     'https://api.spark.io',
-    opts.accessToken
+    process.env.SPARK_ACCESS_TOKEN
   );
 
   client.flashCore(opts.coreId, {file : opts.filePath}).then(function(){

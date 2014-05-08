@@ -3,9 +3,10 @@ var io = null;
 
 exports.connect = function(){
   var clients = cores.getClients();
-  console.log(clients);
-  clients.forEach(function(client){
 
+  console.log('Connected the following Spark Core Clients:');
+  clients.forEach(function(client){
+    console.log(client.opts.color, '-', client.opts.id);
     client.subscribe('input-update').on('update', function(e){
 
       // Convert stringed opts to JSON obj

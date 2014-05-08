@@ -41,7 +41,7 @@ var makeClient = function(core){
   var sparkClient = Spark.createClient({
     id: core._id,
     coreId: core.coreId,
-    token: core.accessToken,
+    token: process.env.SPARK_ACCESS_TOKEN,
     webhooks: {},
     color: core.color
   });
@@ -164,7 +164,6 @@ exports.setPinDefinitions = function(opts, next){
           pins: opts.pins
         }, function(err, filePath){
           bootloader.flash({
-            accessToken: opts.accessToken,
             coreId: opts.coreId,
             filePath: filePath
           })
