@@ -33,9 +33,11 @@
 .page-home span.core-details{
   float: right;
   opacity: .75;
+  font-family: Monospace;
 }
 .page-home span.name{
   padding-left: 3px;
+  font-weight: bold;
 }
 .page-home span.color{
   width: 10px;
@@ -44,7 +46,12 @@
   position: absolute;
   left: 0;
   top: 0;
-  border-radius: 4px 0 0 4px;
+}
+.page-home a.list-group-item:first-child span.color{
+  border-radius: 4px 0 0 0px;
+}
+.page-home a.list-group-item:last-child span.color{
+  border-radius: 0 0 0 4px;
 }
 
 
