@@ -1,0 +1,23 @@
+{
+    "color": color,
+    "coreId": coreId,
+    "webhooks": {},
+    "pins": {
+        "D0" : null,
+        "D1" : null,
+        "D2" : null,
+        "D3" : null,
+        "D4" : null,
+        "D5" : null,
+        "D6" : null,
+        "D7" : null,
+        "A0" : null,
+        "A1" : null,
+        "A2" : null,
+        "A3" : null,
+        "A4" : null,
+        "A5" : null,
+        "A6" : null,
+        "A7" : null
+    }
+}
