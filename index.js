@@ -7,11 +7,12 @@ var port = process.env.PORT || 3000;
 var app = express();
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
+io.set('log level', 1);
 
 app.set('port', process.env.PORT);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
-app.use(express.logger('dev'));
+// app.use(express.logger('tiny'));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
