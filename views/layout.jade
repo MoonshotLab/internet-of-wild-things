@@ -21,6 +21,13 @@ html
             alert('Your core is updating, when the led "breathes blue" it\'s ready for testing');
         });
 
+        $(function(){
+          $('#header')
+            .find('.container')
+            .css('border-bottom', '4px solid ' + core.color);
+        });
+
+
     block head
   body
     #header
