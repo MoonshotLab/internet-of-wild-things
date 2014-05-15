@@ -96,7 +96,7 @@ void loop(){
 
         char publishString[64];
         sprintf(publishString, "{ \"pinId\": \"A%c\", \"state\": %u }", analogInputRefs[i], currentState);
-        Spark.publish("input-update", publishString);
+        Spark.publish("iot-update", publishString);
       }
     }
   }
@@ -112,7 +112,7 @@ void loop(){
 
       char publishString[64];
       sprintf(publishString, "{ \"pinId\": \"D%c\", \"state\": %u }", digitalInputRefs[i], currentState);
-      Spark.publish("input-update", publishString);
+      Spark.publish("iot-update", publishString);
       delay(1000);
     }
   }

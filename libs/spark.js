@@ -47,8 +47,9 @@ Client.prototype.setPin = function(opts, next){
 };
 
 
-Client.prototype.subscribe = function(eventName){
-  if(eventName) this.opts.eventName = eventName;
+exports.subscribe = function(eventName){
+  console.log('subscribing to the spark event stream with the term', eventName);
+
   var emitter = new EE();
 
   var onData = function(event) {
@@ -87,13 +88,12 @@ Client.prototype.subscribe = function(eventName){
     emitter.emit('update', obj);
   };
 
-
   new SparkApi(
     'https://api.spark.io',
-    this.opts.token
+    process.env.SPARK_ACCESS_TOKEN
   ).getEventStream(
-    this.opts.eventName,
-    this.opts.coreId,
+    eventName,
+    null,
     onData
   );
 

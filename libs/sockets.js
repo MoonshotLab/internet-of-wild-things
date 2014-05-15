@@ -1,4 +1,5 @@
 var cores = require('./cores');
+var spark = require('./spark');
 var io = null;
 
 exports.connect = function(){
@@ -7,21 +8,23 @@ exports.connect = function(){
   console.log('Connected the following Spark Core Clients:');
   clients.forEach(function(client){
     console.log(client.opts.color, '-', client.opts.id);
-    client.subscribe('input-update').on('update', function(e){
+  });
 
-      // Convert stringed opts to JSON obj
-      var opts = {coreId: e.coreid };
-      try{
-        var data = JSON.parse(e.data);
-        opts.pinId = data.pinId;
-        opts.state = data.state;
-      } catch(e){
-        if(e) console.log(e);
-      }
+  spark.subscribe('iot-update').on('update', function(e){
+    console.log(e);
 
-      cores.callWebhook(opts);
-      io.sockets.emit('input-update', opts);
-    });
+    // Convert stringed opts to JSON obj
+    var opts = {coreId: e.coreid };
+    try{
+      var data = JSON.parse(e.data);
+      opts.pinId = data.pinId;
+      opts.state = data.state;
+    } catch(e){
+      if(e) console.log(e);
+    }
+
+    cores.callWebhook(opts);
+    io.sockets.emit('input-update', opts);
   });
 };
 
@@ -41,4 +44,4 @@ exports.init = function(connector){
 
 exports.getIo = function(){
   return io;
-}
+};

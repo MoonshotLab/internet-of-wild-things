@@ -33,6 +33,7 @@ exports.flash = function(opts){
   );
 
   client.flashCore(opts.coreId, {file : opts.filePath}).then(function(){
+    console.log('new code:', opts.filePath);
     sockets.getIo().sockets.emit('flash-complete', {
       coreId: opts.coreId
     });
