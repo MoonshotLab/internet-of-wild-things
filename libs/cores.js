@@ -41,7 +41,6 @@ var makeClient = function(core){
   var sparkClient = Spark.createClient({
     id: core._id,
     coreId: core.coreId,
-    token: process.env.SPARK_ACCESS_TOKEN,
     webhooks: {},
     color: core.color
   });
