@@ -22,11 +22,12 @@ var Client = function(opts){
 Client.prototype.getPin = function(opts, next){
   var url = this.baseURL + '/getState';
   var params = {
-    access_token: this.opts.token,
+    access_token: process.env.SPARK_ACCESS_TOKEN,
     params: opts.pinId
   };
 
   needle.post(url, params, function(err, res, body){
+    if(err) console.log(err);
     if(next) next(err, body);
   });
 };
@@ -35,13 +36,12 @@ Client.prototype.getPin = function(opts, next){
 Client.prototype.setPin = function(opts, next){
   var url = this.baseURL + '/setState';
   var params = {
-    access_token: this.opts.token,
+    access_token: process.env.SPARK_ACCESS_TOKEN,
     params: opts.pinId + ',' + opts.pinVal
   };
 
-  console.log(params);
-
   needle.post(url, params, function(err, res, body){
+    if(err) console.log(err);
     if(next) next(err, body);
   });
 };
