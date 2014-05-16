@@ -91,10 +91,10 @@ void loop(){
       int currentState = analogRead(analogInputs[i]);
 
       if(abs(analogInputStates[i] - currentState) > analogChangeThreshold){
-        analogInputStates[i] = currentState;
 
         char publishString[64];
-        sprintf(publishString, "{ \"pinId\": \"A%c\", \"state\": %u }", analogInputRefs[i], currentState);
+        sprintf(publishString, "{ \"pinId\": \"A%c\", \"state\": %u, \"lastState\": %u }", analogInputRefs[i], currentState, analogInputStates[i]);
+        analogInputStates[i] = currentState;
         Spark.publish("iot-update", publishString);
       }
     }
