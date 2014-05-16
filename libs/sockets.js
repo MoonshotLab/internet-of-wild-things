@@ -11,7 +11,6 @@ exports.connect = function(){
   });
 
   spark.subscribe('iot-update').on('update', function(e){
-    console.log(e);
 
     // Convert stringed opts to JSON obj
     var opts = {coreId: e.coreid };
@@ -19,6 +18,13 @@ exports.connect = function(){
       var data = JSON.parse(e.data);
       opts.pinId = data.pinId;
       opts.state = data.state;
+
+      console.log({
+        coreId: e.coreid,
+        color: cores.getColorById(e.coreid),
+        data: data
+      });
+
     } catch(e){
       if(e) console.log(e);
     }

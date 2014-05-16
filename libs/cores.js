@@ -128,7 +128,7 @@ exports.destroyWebhook = function(opts, next){
 
 
 exports.callWebhook = function(opts, next){
-  if(opts.state != undefined) opts.pinVal = opts.state;
+  if(opts.state !== undefined) opts.pinVal = opts.state;
 
   getRecord(opts.coreId, function(record){
     var webhookURL = record.webhooks[opts.pinId];
@@ -165,12 +165,23 @@ exports.setPinDefinitions = function(opts, next){
           bootloader.flash({
             coreId: opts.coreId,
             filePath: filePath
-          })
+          });
         });
 
         if(next) next(err, res);
     });
   });
+};
+
+
+exports.getColorById = function(coreId){
+  var color = '';
+  sparkClients.forEach(function(client){
+    if(client.opts.coreId == coreId)
+      color = client.opts.color;
+  });
+
+  return color;
 };
 
 
