@@ -5,10 +5,11 @@ var io = null;
 exports.connect = function(){
   var clients = cores.getClients();
 
-  console.log('Connected the following Spark Core Clients:');
+  console.log('\nConnected the following Spark Core Clients:');
   clients.forEach(function(client){
-    console.log(client.opts.color, '-', client.opts.id);
+    console.log(client.opts.color, ':', client.opts.id);
   });
+  console.log('\n');
 
   spark.subscribe('iot-update').on('update', function(e){
 
@@ -19,11 +20,10 @@ exports.connect = function(){
       opts.pinId = data.pinId;
       opts.state = data.state;
 
-      console.log({
-        coreId: e.coreid,
-        color: cores.getColorById(e.coreid),
-        data: data
-      });
+      console.log('\n');
+      console.log('---', cores.getColorById(e.coreid).toUpperCase(), 'Event ---');
+      console.log('PinId: ', data.pinId);
+      console.log('State: ', data.state);
 
     } catch(e){
       if(e) console.log(e);

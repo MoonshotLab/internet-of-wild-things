@@ -48,7 +48,7 @@ Client.prototype.setPin = function(opts, next){
 
 
 exports.subscribe = function(eventName){
-  console.log('subscribing to the spark event stream with the term', eventName);
+  console.log('Subscribing to the spark event stream with the term', eventName);
 
   var emitter = new EE();
 
