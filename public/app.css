@@ -85,6 +85,13 @@
 .page-core .help-block{
   margin-top: 10px;
 }
+.page-core tr.help-text td{
+  border-top: none;
+  padding-top: 0;
+}
+.page-core tr.help-text p.help-block{
+  margin-top: 0;
+}
 .page-core #accept-hook-notifier .alert{
   font-size: 90%;
   margin: -15px -15px 15px;

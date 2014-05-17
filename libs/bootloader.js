@@ -7,7 +7,6 @@ var SparkApi = require(
 
 
 exports.generateCode = function(opts, next){
-  opts.analogChangeThreshold = 25;
 
   fs.readFile('./duino/template.ino', 'utf8', function(err, data){
     var fileContents = replaceKeysWithProperties(opts, data);
@@ -108,8 +107,8 @@ var replaceKeysWithProperties = function(opts, blob){
   } else
     blob = blob.replace('¡¡digitalInputRefs¡¡', '{}');
 
-  blob = blob.replace('¡¡analogChangeThreshold¡¡',
-     opts.analogChangeThreshold
+  blob = blob.replace('¡¡analogThreshold¡¡',
+     opts.analogThreshold
   );
 
   return blob;

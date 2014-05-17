@@ -2,6 +2,7 @@
     "color": color,
     "coreId": coreId,
     "webhooks": {},
+    "analogThreshold": "15",
     "pins": {
         "D0" : null,
         "D1" : null,

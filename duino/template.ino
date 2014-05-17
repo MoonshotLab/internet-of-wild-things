@@ -1,4 +1,4 @@
-int analogChangeThreshold = ¡¡analogChangeThreshold¡¡;
+int analogThreshold = ¡¡analogThreshold¡¡;
 
 char analogInputRefs[] = ¡¡analogInputRefs¡¡;
 char digitalInputRefs[] = ¡¡digitalInputRefs¡¡;
@@ -90,7 +90,7 @@ void loop(){
     for(int i=0; i<sizeof(analogInputs)/sizeof(int); i++){
       int currentState = analogRead(analogInputs[i]);
 
-      if(abs(analogInputStates[i] - currentState) > analogChangeThreshold){
+      if(abs(analogInputStates[i] - currentState) > analogThreshold){
 
         char publishString[64];
         sprintf(publishString, "{ \"pinId\": \"A%c\", \"state\": %u, \"lastState\": %u }", analogInputRefs[i], currentState, analogInputStates[i]);

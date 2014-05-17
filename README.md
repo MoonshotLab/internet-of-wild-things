@@ -25,7 +25,7 @@ The generated code will broadcast events for each pin explicitly set as an outpu
 
 Digital pin events are broadcast immediately upon change. After the event is emitted, a one second delay is enforced to prevent emissions which trigger rate limiting from Spark's API
 
-Analog pin events are broadcast when a sufficient change is detected. The default threshold is set as `15` (an incredibly arbitrary number), and is not currently configurable via the interface.
+Analog pin events are broadcast when a sufficient change is detected. The default threshold is set at `15` (an incredibly arbitrary number) and is configurable via the interface.
 
 These events can be listened to via [Spark's Command Line Interface](https://github.com/spark/spark-cli) `spark subscribe iot-update`.
 
@@ -47,6 +47,8 @@ Forwards a `GET` to a `POST` for a webhook matching the specified core's pinId. 
 /core/{coreId}/callHook?pinId={pinId}&pinVal={pinVal}
 /core/13456789/callHook?pinId=D0&pinVal=1
 ```
+
+## Setting up Keys
 
 ## Class Materials
 TBD

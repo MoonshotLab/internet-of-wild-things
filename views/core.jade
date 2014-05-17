@@ -115,6 +115,13 @@ block content
               +tableRow("A5")
               +tableRow("A6")
               +tableRow("A7")
+              tr
+                td(colspan='2') Analog Input Threshold
+                td(colspan='2')
+                  input.form-control#analog-threshold(type="number", value="#{core.analogThreshold}")
+              tr.help-text
+                td(colspan='4')
+                  p.help-block The change in current required to trigger an event. Change this value if you need more sensitivity from your analog inputs. <em>15 is a good place to start</em>.
           .panel-footer
             a.reset#reset(href='#') Reset All Pins
             a.btn.btn-default#flash-core(href='#') Save and Bootload Core

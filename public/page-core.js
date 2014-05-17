@@ -63,7 +63,7 @@ $(function(){
   });
 
 
-  // Flash Core and setup pins
+  // Setup Pins
   for(var key in core.pins){
     if(core.pins[key] == 'output')
       $('#' + key + '-radio-output').attr('checked', 'checked');
@@ -73,6 +73,8 @@ $(function(){
       $('#' + key + '-radio-null').attr('checked', 'checked');
   }
 
+
+  // Flash the Core
   $('#flash-core').click(function(e){
     e.preventDefault();
     var pins = {};
@@ -85,6 +87,7 @@ $(function(){
 
     socket.emit('set-pin-definitions', {
       coreId: core.coreId,
+      analogThreshold: $('#analog-threshold').val(),
       pins: pins
     });
   });
@@ -98,6 +101,7 @@ $(function(){
       $radios.filter('[value=unused]').prop('checked', true);
     });
   });
+
 
   // Delete Hook
   $('ul#publish-hooks-list').click(function(e){

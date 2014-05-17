@@ -155,12 +155,14 @@ exports.setPinDefinitions = function(opts, next){
       { _id: record._id },
       { $set:
         {
-          pins: opts.pins
+          pins: opts.pins,
+          analogThreshold: opts.analogThreshold
         }
       }, function(err, res){
         bootloader.generateCode({
           coreId: opts.coreId,
-          pins: opts.pins
+          pins: opts.pins,
+          analogThreshold: opts.analogThreshold
         }, function(err, filePath){
           bootloader.flash({
             coreId: opts.coreId,
