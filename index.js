@@ -1,6 +1,5 @@
 var http = require('http');
 var express = require('express');
-// var tweetListener = require('./libs/tweets');
 var sockets = require('./libs/sockets');
 
 var port = process.env.PORT || 3000;
