@@ -48,10 +48,19 @@ Forwards a `GET` to a `POST` for a webhook matching the specified core's pinId. 
 /core/13456789/callHook?pinId=D0&pinVal=1
 ```
 
-## Setting up Keys
-
 ## Class Materials
-TBD
+### Worksheets and Presentation are publicly available via google docs:
+* [Slides](https://docs.google.com/presentation/d/12QPfs99aJnxXwtKe0scYcNoUmi8t3_ACDv7x8QgXx2k/edit?usp=sharing)
+* [Essentials](https://docs.google.com/document/d/1rtvIpxw_VBBPk4kuN3pqxlyxZDnfJMqKLS4J3WeVfQ0/edit?usp=sharing)
+* [Switches and Controls](https://docs.google.com/document/d/1SO6Q5rlsIMHSP5gGgDt0duH2wln8jjoJAgtfH303Y9s/edit?usp=sharing)
+* [Weight and Touch](https://docs.google.com/document/d/1Lw6EdYqnHf8duMMRAUMgkTeEKRPHWlA3ojJL1Aht8Ec/edit?usp=sharing)
+* [Detecting and Creating Movement](https://docs.google.com/document/d/18axQn_0DZHCxeeXUvFbedITiu49fLXiST5Zi_AW9EDA/edit?usp=sharing)
+* [Gas, Light, and Temperature](https://docs.google.com/document/d/1x_c-cZCMOsWPZRIEOcMl3W1colC7D9-NmNlXgSusq60/edit?usp=sharing)
+
+### Other Tips
+* If a student gets rate limited because of excessive event emission, it's possible that their core will not load new code. To resolve the issue, plug the pin directly into the power source. You should now be able to load new code on the device.
+* Occasionally, someone will send power into an output, drop the core in a toilet, or do something else which will force the core to be factory reset. Hold the mode button, tap reset, and wait 10 seconds until the LED fashes white.
+* The easiest way to connect the core to the internet is via [CoolTerm](http://freeware.the-meiers.org/). Connect your device, tap `w`, to configure the wifi credentials.
 
 ![Breadboard and Circuit](http://i.imgur.com/iCDqQ00.jpg)
 ![Tool Table](http://i.imgur.com/ZZO8H67.jpg)
