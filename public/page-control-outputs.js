@@ -14,7 +14,7 @@ $(function(){
 
   // Handle analog cases
   var setAnalogVal = function($context){
-    var $input = $context.parent().parent().find('input')
+    var $input = $context.parent().parent().find('input');
     var pinId = $input.data('pinid');
     var pinVal = $input.val();
 
@@ -28,8 +28,15 @@ $(function(){
   $('.analog-input').keyup(function(e){
     if(e.keyCode == 13)
       setAnalogVal($(this).parent().find('button'));
-  })
+  });
+  $('.servo-input').keyup(function(e){
+    if(e.keyCode == 13)
+      setAnalogVal($(this).parent().find('button'));
+  });
   $('.btn.analog-pin').click(function(){
+    setAnalogVal($(this));
+  });
+  $('.btn.servo-pin').click(function(){
     setAnalogVal($(this));
   });
 

@@ -6,6 +6,8 @@ $(function(){
       $('#' + key + '-radio-output').attr('checked', 'checked');
     else if(core.pins[key] == 'input')
       $('#' + key + '-radio-input').attr('checked', 'checked');
+    else if(core.pins[key] == 'servo')
+      $('#' + key + '-radio-servo').attr('checked', 'checked');
     else
       $('#' + key + '-radio-null').attr('checked', 'checked');
   }

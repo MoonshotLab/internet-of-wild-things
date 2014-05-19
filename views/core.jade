@@ -26,8 +26,8 @@ block content
                 th Make Unused
             tbody#pin-definitions
               +emptyTableRow()
-              +tableRow("D0", true)
-              +tableRow("D1", true)
+              +tableRow("D0", false)
+              +tableRow("D1", false)
               +tableRow("D2", false)
               +tableRow("D3", false)
               +tableRow("D4", false)
@@ -64,7 +64,7 @@ mixin tableRow(name, includeServo)
       input(type='radio', id="#{name}-radio-output", name="#{name}-radio", value="output")
     - if(includeServo)
       td
-        input(type='radio', id="#{name}-radio-servo", name="#{name}-servo", value="servo")
+        input(type='radio', id="#{name}-radio-servo", name="#{name}-radio", value="servo")
     - else
       td -
     td

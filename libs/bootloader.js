@@ -49,6 +49,10 @@ var replaceKeysWithProperties = function(opts, blob){
   var analogInputs = [];
   var analogInputRefs = [];
   var analogInputStates = [];
+  var servoDefinitions = '';
+  var servoAttachments = '';
+  var servoChecks = '';
+  var servos = [];
 
   for(var key in opts.pins){
     if(opts.pins[key] == 'output' && key.indexOf('D') != -1)
@@ -59,16 +63,30 @@ var replaceKeysWithProperties = function(opts, blob){
       analogOutputs.push(key);
     else if(opts.pins[key] == 'input' && key.indexOf('A') != -1)
       analogInputs.push(key);
+    else if(opts.pins[key] == 'servo'){
+      servos.push(key);
+    }
   }
 
   digitalInputs.forEach(function(input){
     digitalInputRefs.push(input.replace('D', ''));
     digitalInputStates.push(0);
   });
+
   analogInputs.forEach(function(input){
     analogInputStates.push(0);
     analogInputRefs.push(input.replace('A', ''));
   });
+
+  servos.forEach(function(servo){
+    servoDefinitions += 'Servo servo_' + servo + '; \n';
+    servoAttachments += 'servo_' + servo + '.attach(' + servo + '); \n';
+    servoChecks += "if(command.charAt(1) == '" + servo.replace('A', '') + "'){ servo_" + servo + ".write(pinVal); }"
+  });
+
+  blob = blob.replace('¡¡servoDefintions¡¡', servoDefinitions);
+  blob = blob.replace('¡¡servoAttachments¡¡', servoAttachments);
+  blob = blob.replace('¡¡servoChecks¡¡', servoChecks);
 
   blob = blob.replace('¡¡digitalInputs¡¡',
     '{' + digitalInputs.join(',') + '}'

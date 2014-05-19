@@ -1,5 +1,7 @@
 int analogThreshold = ¡¡analogThreshold¡¡;
 
+¡¡servoDefintions¡¡
+
 char analogInputRefs[] = ¡¡analogInputRefs¡¡;
 char digitalInputRefs[] = ¡¡digitalInputRefs¡¡;
 
@@ -25,19 +27,16 @@ int setState(String command)
 
   if(pinType == 'D')
     digitalWrite(pinRef, pinVal);
-  else{
-    char publishString[64];
-
-    // just fuck it all
+  else if(pinType =='S'){
+    ¡¡servoChecks¡¡
+    //if(command.charAt(1) == '0'){servo_A0.write(pinVal)};
+  } else{
     if(command.charAt(1) == '0')
       analogWrite(A0, pinVal);
     if(command.charAt(1) == '1')
       analogWrite(A1, pinVal);
-    if(command.charAt(1) == '2'){
+    if(command.charAt(1) == '2')
       analogWrite(A2, pinVal);
-      sprintf(publishString, "{ \"pinId\": \"A%c\", \"state\": %u }", command.charAt(1), pinVal);
-      Spark.publish("receive-test", publishString);
-    }
     if(command.charAt(1) == '3')
       analogWrite(A3, pinVal);
     if(command.charAt(1) == '4')
@@ -56,6 +55,8 @@ int setState(String command)
 
 
 void setup(){
+  ¡¡servoAttachments¡¡
+
   // Loop over analogs inputs and outputs,
   // setting each one appropriately
   for(int i=0; i<sizeof(digitalInputs)/sizeof(int); i++){
