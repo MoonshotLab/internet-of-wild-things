@@ -27,6 +27,7 @@ app.get('/core/:id/watch-inputs', routes.watchInputs);
 app.get('/core/:id/control-outputs', routes.controlOutputs);
 app.get('/core/:id/setPin', routes.setPin);
 app.get('/core/:id/hook', routes.callHook);
+app.get('/core/:id/webhooks', routes.webhooks);
 
 
 sockets.init(io);

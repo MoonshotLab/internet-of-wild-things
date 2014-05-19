@@ -1,0 +1,11 @@
+.row
+  .col-sm-12
+    ul.nav.nav-tabs
+      li(class=(activeNav == 'core' ? 'active' : ''))
+        a(href='/core/#{core.coreId}/') Core Definition
+      li(class=(activeNav == 'watch-inputs' ? 'active' : ''))
+        a(href="/core/#{core.coreId}/watch-inputs") Watch Inputs
+      li(class=(activeNav == 'control-outputs' ? 'active' : ''))
+        a(href="/core/#{core.coreId}/control-outputs") Control Outputs and Servos
+      li(class=(activeNav == 'webhooks' ? 'active' : ''))
+        a(href="/core/#{core.coreId}/webhooks") Webhooks

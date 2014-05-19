@@ -5,15 +5,8 @@ block head
 
 block content
   .container.main.page-control-outputs
-    .row
-      .col-sm-12
-        ul.nav.nav-tabs
-          li
-            a(href='/core/#{core.coreId}/') Core Details
-          li
-            a(href="/core/#{core.coreId}/watch-inputs") Watch Inputs
-          li.active
-            a(href="/core/#{core.coreId}/control-outputs") Control Outputs
+    include ./_nav
+
     .row
       .col-sm-12
         p Control your predefined digital and analog outputs. If you're not seeing any available outputs, please visit <a href="/core/#{core.coreId}/">Core Details page</a> to begin adding some.
@@ -30,6 +23,7 @@ block content
           - for(var key in core.pins)
             - if(key.indexOf('A') != -1 && core.pins[key] == 'output')
               +analogPin(key)
+
 
 mixin digitalPin(pinId)
   li.list-group-item

@@ -1,0 +1,75 @@
+extends layout
+
+block head
+  script(src='/page-webhooks.js')
+
+block content
+  .container.main.page-webhooks
+    include ./_nav
+
+    .row
+      .col-sm-6
+        .panel.panel-default.publish-hook
+          .panel-heading
+            h4.panel-title Publish <em><strong>hook</strong></em> to Zapier
+          .panel-body
+            ul.list-group#publish-hooks-list
+              each val, key in core.webhooks
+                li.list-group-item #{key} - #{val}
+                  a.delete-hook(href='#', data-pinid="#{key}") &times;
+            .form-group
+              label Select A Pin
+              select.form-control#publish-hook-pin
+                option(val='D0') D0
+                option(val='D1') D1
+                option(val='D2') D2
+                option(val='D3') D3
+                option(val='D4') D4
+                option(val='D5') D5
+                option(val='D6') D6
+                option(val='D7') D7
+                option(val='A0') A0
+                option(val='A1') A1
+                option(val='A2') A2
+                option(val='A3') A3
+                option(val='A4') A4
+                option(val='A5') A5
+                option(val='A6') A6
+                option(val='A7') A7
+            .input-group
+              input.form-control#publish-hook-input(type='text', placeholder='Zapier Hook URL')
+              span.input-group-btn
+                button.btn.btn-default#publish-hook-button(type='submit') OK
+        p Use this for <em><strong>When something happens on my board, make it happen on the internet</strong></em>. Find this within the Zapier interface when creating a new Zap.
+        p The URL you paste in the input above should look like <em>https://zapier.com/hooks/catch/atdvc/</em>
+
+      .col-sm-6
+        .panel.panel-default.accept-hook
+          .panel-heading
+            h4.panel-title Accept <em><strong>hook</strong></em> from Zapier
+          .panel-body
+            #accept-hook-notifier
+            .form-group
+              label Select A Pin
+              select.form-control#accept-hook-pin
+                option(val='D0') D0
+                option(val='D1') D1
+                option(val='D2') D2
+                option(val='D3') D3
+                option(val='D4') D4
+                option(val='D5') D5
+                option(val='D6') D6
+                option(val='D7') D7
+                option(val='A0') A0
+                option(val='A1') A1
+                option(val='A2') A2
+                option(val='A3') A3
+                option(val='A4') A4
+                option(val='A5') A5
+                option(val='A6') A6
+                option(val='A7') A7
+            .input-group
+              input.form-control#accept-hook-input(type='text', placeholder='Input Value (eg. 0, 1, 124)')
+              span.input-group-btn
+                button.btn.btn-default#accept-hook-button(type='submit') OK
+        p Use this for <em><strong>When something happens on the internet, do something on my board</strong></em>. Paste the generated URL into the Zapier interface.

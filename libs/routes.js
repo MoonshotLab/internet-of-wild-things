@@ -6,19 +6,37 @@ exports.home = function(req, res){
 
 exports.core = function(req, res){
   cores.getRecord(req.params.id, function(record){
-    res.render('core', { core: record });
+    res.render('core', {
+      core: record,
+      activeNav: 'core'
+    });
   });
 };
 
 exports.controlOutputs = function(req, res){
   cores.getRecord(req.params.id, function(record){
-    res.render('control-outputs', { core: record });
+    res.render('control-outputs', {
+      core: record,
+      activeNav: 'control-outputs'
+    });
   });
 };
 
 exports.watchInputs = function(req, res){
   cores.getRecord(req.params.id, function(record){
-    res.render('watch-inputs', { core: record });
+    res.render('watch-inputs', {
+      core: record,
+      activeNav: 'watch-inputs'
+    });
+  });
+};
+
+exports.webhooks = function(req, res){
+  cores.getRecord(req.params.id, function(record){
+    res.render('webhooks', {
+      core: record,
+      activeNav: 'webhooks'
+    });
   });
 };
 

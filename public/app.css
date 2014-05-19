@@ -56,30 +56,13 @@
 
 
 /* Page - Core*/
-.page-core h3{
-  margin-top: 0px;
-  margin-bottom: 20px;
-}
-.page-core ul:empty{
-  margin: 0;
-}
-.page-core .webhooks label{
-  padding-top: 8px;
-  float: left;
-  font-weight: normal;
-  font-size: 90%;
+.page-core th{
+  white-space: nowrap;
 }
 .page-core #flash-core{
   float: right;
 }
 .page-core .panel-footer{
-  overflow: hidden;
-}
-.page-core .webhooks select{
-  width: 70%;
-  float: right;
-}
-.page-core .webhooks .form-group{
   overflow: hidden;
 }
 .page-core .help-block{
@@ -92,18 +75,8 @@
 .page-core tr.help-text p.help-block{
   margin-top: 0;
 }
-.page-core #accept-hook-notifier .alert{
-  font-size: 90%;
-  margin: -15px -15px 15px;
-  border-radius: 0;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  padding: 10px;
-  border: none;
-  word-wrap: break-word;
-}
-.page-core .panel.accept-hook{
-  margin-bottom: 64px;
+.page-core #analog-threshold{
+  margin-top: 25px;
 }
 .page-core #reset{
   display: block;
@@ -111,11 +84,7 @@
   padding-bottom: 6px;
   font-size: 80%;
 }
-.page-core .delete-hook{
-  float: right;
-  font-weight: bold;
-  color: rgb(200, 20, 80);
-}
+
 
 /* Page - Control Outputs */
 .page-control-outputs #digital-outputs .btn-group{
@@ -124,6 +93,7 @@
 .page-control-outputs #digital-outputs li{
   overflow: hidden;
 }
+
 
 /* Page - Watch Inputs */
 .page-watch-inputs span.val{
@@ -135,7 +105,40 @@
 }
 
 
+/* Page - Webhooks */
+.page-webhooks label{
+  padding-top: 8px;
+  float: left;
+  font-weight: normal;
+  font-size: 90%;
+}
+.page-webhooks select{
+  width: 70%;
+  float: right;
+}
+.page-webhooks .form-group{
+  overflow: hidden;
+}
+.page-webhooks #accept-hook-notifier .alert{
+  font-size: 90%;
+  margin: -15px -15px 15px;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  padding: 10px;
+  border: none;
+  word-wrap: break-word;
+}
+.page-webhooks .delete-hook{
+  float: right;
+  font-weight: bold;
+  color: rgb(200, 20, 80);
+}
+
 /* Bootstrap Mod */
+ul:empty{
+  margin: 0;
+}
 .help-block{
   font-size: 85%;
 }

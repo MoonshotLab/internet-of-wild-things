@@ -5,90 +5,15 @@ block head
 
 block content
   .container.main.page-core
+    include ./_nav
+
     .row
       .col-sm-12
-        ul.nav.nav-tabs
-          li.active
-            a(href='/core/#{core.coreId}/') Core Details
-          li
-            a(href="/core/#{core.coreId}/watch-inputs") Watch Inputs
-          li
-            a(href="/core/#{core.coreId}/control-outputs") Control Outputs
+        p Each pin on your spark core can act as either an <em>input</em> (button, motion sensor, temperature probe, etc.), <em>output</em> (light, motor, solenoid, etc.), servo, or remain unused. Use this page to define how each pin on your board behaves. Note that a servo can only be used on a few special pins.
+        p <strong>D</strong> stands for digital, <strong>A</strong> stands for analog. So <strong>D0</strong> is digital pin number 0.
 
     .row
-      .col-sm-6.webhooks
-        h3 Webhooks
-
-        .panel.panel-default.publish-hook
-          .panel-heading
-            h4.panel-title Publish <em><strong>hook</strong></em> to Zapier
-          .panel-body
-            ul.list-group#publish-hooks-list
-              each val, key in core.webhooks
-                li.list-group-item #{key} - #{val}
-                  a.delete-hook(href='#', data-pinid="#{key}") &times;
-            .form-group
-              label Select A Pin
-              select.form-control#publish-hook-pin
-                option(val='D0') D0
-                option(val='D1') D1
-                option(val='D2') D2
-                option(val='D3') D3
-                option(val='D4') D4
-                option(val='D5') D5
-                option(val='D6') D6
-                option(val='D7') D7
-                option(val='A0') A0
-                option(val='A1') A1
-                option(val='A2') A2
-                option(val='A3') A3
-                option(val='A4') A4
-                option(val='A5') A5
-                option(val='A6') A6
-                option(val='A7') A7
-            .input-group
-              input.form-control#publish-hook-input(type='text', placeholder='Zapier Hook URL')
-              span.input-group-btn
-                button.btn.btn-default#publish-hook-button(type='submit') OK
-            p.help-block Use this for <em><strong>When something happens on my board, make it happen on the internet</strong></em>. Find this within the Zapier interface when creating a new Zap. Should look like - https://zapier.com/hooks/catch/atdvc/
-
-        .panel.panel-default.accept-hook
-          .panel-heading
-            h4.panel-title Accept <em><strong>hook</strong></em> from Zapier
-          .panel-body
-            #accept-hook-notifier
-            .form-group
-              label Select A Pin
-              select.form-control#accept-hook-pin
-                option(val='D0') D0
-                option(val='D1') D1
-                option(val='D2') D2
-                option(val='D3') D3
-                option(val='D4') D4
-                option(val='D5') D5
-                option(val='D6') D6
-                option(val='D7') D7
-                option(val='A0') A0
-                option(val='A1') A1
-                option(val='A2') A2
-                option(val='A3') A3
-                option(val='A4') A4
-                option(val='A5') A5
-                option(val='A6') A6
-                option(val='A7') A7
-            .input-group
-              input.form-control#accept-hook-input(type='text', placeholder='Input Value (eg. 0, 1, 124)')
-              span.input-group-btn
-                button.btn.btn-default#accept-hook-button(type='submit') OK
-            p.help-block Use this for <em><strong>When something happens on the internet, do something on my board</strong></em>. Paste the generated URL into the Zapier interface.
-
-        h3 Core Details
-        .panel.panel-default
-          ul.list-group
-            li.list-group-item Color: <em>#{core.color.toUpperCase()}</em>
-            li.list-group-item Id: <em>#{core.coreId}</em>
-
-      .col-sm-6
+      .col-sm-12
         h3 Define Inputs and Outputs
         .panel.panel-default
           table.table
@@ -97,42 +22,58 @@ block content
                 th Pin Name
                 th Make Input
                 th Make Output
+                th Make Servo
                 th Make Unused
             tbody#pin-definitions
-              +tableRow("D0")
-              +tableRow("D1")
-              +tableRow("D2")
-              +tableRow("D3")
-              +tableRow("D4")
-              +tableRow("D5")
-              +tableRow("D6")
-              +tableRow("D7")
-              +tableRow("A0")
-              +tableRow("A1")
-              +tableRow("A2")
-              +tableRow("A3")
-              +tableRow("A4")
-              +tableRow("A5")
-              +tableRow("A6")
-              +tableRow("A7")
+              +emptyTableRow()
+              +tableRow("D0", true)
+              +tableRow("D1", true)
+              +tableRow("D2", false)
+              +tableRow("D3", false)
+              +tableRow("D4", false)
+              +tableRow("D5", false)
+              +tableRow("D6", false)
+              +tableRow("D7", false)
+              +emptyTableRow()
+              +tableRow("A0", true)
+              +tableRow("A1", true)
+              +tableRow("A2", false)
+              +tableRow("A3", false)
+              +tableRow("A4", true)
+              +tableRow("A5", true)
+              +tableRow("A6", true)
+              +tableRow("A7", true)
+              +emptyTableRow()
               tr
-                td(colspan='2') Analog Input Threshold
-                td(colspan='2')
-                  input.form-control#analog-threshold(type="number", value="#{core.analogThreshold}")
-              tr.help-text
                 td(colspan='4')
-                  p.help-block The change in current required to trigger an event. Change this value if you need more sensitivity from your analog inputs. <em>15 is a good place to start</em>.
+                  h4 Analog Input Threshold
+                  p The change in current required to trigger an event. Change this value if you need more sensitivity from your analog inputs. <em>15 is a good place to start</em>.
+                td(colspan='1')
+                  input.form-control#analog-threshold(type="number", value="#{core.analogThreshold}")
           .panel-footer
             a.reset#reset(href='#') Reset All Pins
             a.btn.btn-default#flash-core(href='#') Save and Bootload Core
 
 
-mixin tableRow(name)
+mixin tableRow(name, includeServo)
   tr(data-pinid="#{name}")
     td #{name}
     td
       input(type='radio', id="#{name}-radio-input", name="#{name}-radio", value="input")
     td
       input(type='radio', id="#{name}-radio-output", name="#{name}-radio", value="output")
+    - if(includeServo)
+      td
+        input(type='radio', id="#{name}-radio-servo", name="#{name}-servo", value="servo")
+    - else
+      td -
     td
       input(type='radio', id="#{name}-radio-null", name="#{name}-radio", value="unused")
+
+mixin emptyTableRow
+  tr.active
+    td
+    td
+    td
+    td
+    td

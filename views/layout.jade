@@ -18,7 +18,7 @@ html
         var core = !{JSON.stringify(core)}
         socket.on('flash-complete', function(data){
           if(core.coreId == data.coreId)
-            alert('Your core is updating, when the led "breathes blue" it\'s ready for testing');
+            alert('Your core is updating... this will take a minute. When the LED "breathes blue" your core is ready for testing');
         });
 
         $(function(){

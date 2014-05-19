@@ -5,18 +5,11 @@ block head
 
 block content
   .container.main.page-watch-inputs
+    include ./_nav
+
     .row
       .col-sm-12
-        ul.nav.nav-tabs
-          li
-            a(href='/core/#{core.coreId}/') Core Details
-          li.active
-            a(href="/core/#{core.coreId}/watch-inputs") Watch Inputs
-          li
-            a(href="/core/#{core.coreId}/control-outputs") Control Outputs
-    .row
-      .col-sm-12
-        p Watch for changes in your digital and analog outputs. If you're not seeing any inputs or outputs listed below, please make sure you've configured some by visiting your <a href="/core/#{core.coreId}/">Core Details page</a> . If you're not seeing any data come through, you might be <em>rate limited</em>. Make sure all your inputs and outputs are plugged in correctly and try again.
+        p Watch for changes in your digital and analog inputs. If you're not seeing any inputs listed below, please make sure you've configured some by visiting your <a href="/core/#{core.coreId}/">Core Details page</a> . If you're not seeing any data come through, you might be <em>rate limited</em>. Make sure all your inputs and outputs are plugged in correctly and try again.
     .row
       .col-sm-6
         h3 Digital Inputs
