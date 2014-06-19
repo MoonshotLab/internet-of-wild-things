@@ -20,7 +20,7 @@ var connect = function(model){
   );
 
   client.on('connect', handleConnection);
-  client.on('iot-update', handleEvent);
+  client.on('event', handleEvent);
   client.on('error', handleError);
 };
 
@@ -36,12 +36,16 @@ var handleError = function(err){
 
 
 var handleEvent = function(e){
-  sparkModel.callWebhook({
-    coreId: e.coreId,
-    pinId: e.data.pinId
+  sparkModel.getColorById(e.data.coreid).then(function(color){
+    console.log('Event:', color, e.data.data.pinId);
   });
 
-  sockets.getIo().emit('input-update', e);
+  sparkModel.callWebhook({
+    coreId: e.data.coreid,
+    pinId: e.data.data.pinId
+  });
+
+  sockets.getIo().sockets.emit('input-update', e);
 };
 
 

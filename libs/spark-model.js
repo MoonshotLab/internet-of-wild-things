@@ -101,9 +101,10 @@ var setPins = function(opts){
 
 
 var callWebhook = function(opts){
+  var deferred = Q.defer();
+
   getByCoreId(opts.coreId).then(function(record){
     var webhookURL = record.webhooks[opts.pinId];
-
     if(webhookURL){
       var formData = [
         'pinId=',
@@ -113,10 +114,23 @@ var callWebhook = function(opts){
       ].join('');
 
       needle.post(webhookURL, formData, function(err, res){
-        if(next) next(err, res);
+        deferred.resolve(update);
       });
     }
   });
+
+  return deferred.promise;
+};
+
+
+var getColorById = function(){
+  var deferred = Q.defer();
+
+  getByCoreId(opts.coreId).then(function(record){
+    deferred.resolve(record.color);
+  });
+
+  return deferred.promise;
 };
 
 
@@ -127,3 +141,4 @@ exports.getByCoreId = getByCoreId;
 exports.destroyWebhook = destroyWebhook;
 exports.createWebhook = createWebhook;
 exports.callWebhook = callWebhook;
+exports.getColorById = getColorById;
