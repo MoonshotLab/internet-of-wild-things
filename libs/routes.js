@@ -1,42 +1,34 @@
-var cores = require('./cores');
+var sparkModel = require('./spark-model');
 
 exports.home = function(req, res){
-  res.render('index', { cores: cores.getClients() });
+  res.render('index', { cores: sparkModel.getAll() });
 };
 
 exports.core = function(req, res){
-  cores.getRecord(req.params.id, function(record){
-    res.render('core', {
-      core: record,
-      activeNav: 'core'
-    });
+  res.render('core', {
+    core: req.core,
+    activeNav: 'core'
   });
 };
 
 exports.controlOutputs = function(req, res){
-  cores.getRecord(req.params.id, function(record){
-    res.render('control-outputs', {
-      core: record,
-      activeNav: 'control-outputs'
-    });
+  res.render('control-outputs', {
+    core: req.core,
+    activeNav: 'control-outputs'
   });
 };
 
 exports.watchInputs = function(req, res){
-  cores.getRecord(req.params.id, function(record){
-    res.render('watch-inputs', {
-      core: record,
-      activeNav: 'watch-inputs'
-    });
+  res.render('watch-inputs', {
+    core: req.core,
+    activeNav: 'watch-inputs'
   });
 };
 
 exports.webhooks = function(req, res){
-  cores.getRecord(req.params.id, function(record){
-    res.render('webhooks', {
-      core: record,
-      activeNav: 'webhooks'
-    });
+  res.render('webhooks', {
+    core: req.core,
+    activeNav: 'webhooks'
   });
 };
 
