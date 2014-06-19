@@ -4,11 +4,13 @@ var sockets = require('./libs/sockets');
 var sparkModel = require('./libs/spark-model');
 var sparkCore = require('./libs/spark-core');
 
+
 var port = process.env.PORT || 3000;
 var app = express();
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 io.set('log level', 1);
+
 
 app.set('port', process.env.PORT);
 app.set('views', __dirname + '/views');
@@ -20,14 +22,22 @@ app.use(app.router);
 app.use(express.static(__dirname + '/public'));
 
 
+var getSparkModel = function(req, res, next){
+  sparkModel.getByCoreId(req.params.id).then(function(core){
+    req.core = core;
+    if(next) next();
+  })
+};
+
+
 var routes = require('./libs/routes');
 app.get('/', routes.home);
-app.get('/core/:id', sparkModel.getSparkModel, routes.core);
-app.get('/core/:id/watch-inputs', sparkModel.getSparkModel, routes.watchInputs);
-app.get('/core/:id/control-outputs', sparkModel.getSparkModel, routes.controlOutputs);
-app.get('/core/:id/setPin', sparkModel.getSparkModel, routes.setPin);
-app.get('/core/:id/hook', sparkModel.getSparkModel, routes.callHook);
-app.get('/core/:id/webhooks', sparkModel.getSparkModel, routes.webhooks);
+app.get('/core/:id', getSparkModel, routes.core);
+app.get('/core/:id/watch-inputs', getSparkModel, routes.watchInputs);
+app.get('/core/:id/control-outputs', getSparkModel, routes.controlOutputs);
+app.get('/core/:id/setPin', getSparkModel, routes.setPin);
+app.get('/core/:id/hook', getSparkModel, routes.callHook);
+app.get('/core/:id/webhooks', getSparkModel, routes.webhooks);
 
 
 sockets.init(io);
@@ -37,10 +47,3 @@ console.log('server listening on', port);
 sparkModel.connect()
   .then(sparkModel.getAll)
   .then(sparkCore.connectClients);
-
-var getSparkModel = function(req, res, next){
-  sparkModel.getByCoreId(req.params.id).then(function(core){
-    req.core = core;
-    if(next) next();
-  })
-};

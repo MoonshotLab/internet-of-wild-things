@@ -8,7 +8,7 @@ var connect = function(){
   var deferred = Q.defer();
 
   MongoClient.connect(process.env.WILD_THANGS_DB_CONNECTOR, function(err, client){
-    collection = db.collection('cores');
+    collection = client.collection('cores');
     deferred.resolve(collection);
   });
 
@@ -20,6 +20,7 @@ var getAll = function(){
   var deferred = Q.defer();
 
   collection.find().toArray(function(err, results){
+    console.log(results);
     deferred.resolve(results);
   });
 
@@ -107,6 +108,7 @@ var callWebhook = function(opts){
 
 
 exports.connect = connect;
+exports.getAll = getAll;
 exports.getByCoreId = getByCoreId;
 exports.upsert = upsert;
 exports.destroyWebhook = destroyWebhook;

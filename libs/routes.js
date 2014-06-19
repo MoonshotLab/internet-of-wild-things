@@ -1,7 +1,9 @@
 var sparkModel = require('./spark-model');
 
 exports.home = function(req, res){
-  res.render('index', { cores: sparkModel.getAll() });
+  sparkModel.getAll().then(function(models){
+    res.render('index', { cores: models });
+  });
 };
 
 exports.core = function(req, res){

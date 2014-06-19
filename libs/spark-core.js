@@ -8,7 +8,6 @@ var sockets = require('./sockets');
 var connectClients = function(models){
   console.log('\nConnecting spark clients...');
   models.forEach(connect);
-  console.log('\n');
 };
 
 
@@ -19,12 +18,14 @@ var connect = function(model){
     {}
   );
 
-  client.on('connect', function(){
-    console.log('connected', model.color);
-  });
-
-  client.on('iot-update', newEvent);
+  client.on('connect', handleConnection);
+  client.on('iot-update', handleEvent);
   client.on('error', handleError);
+};
+
+
+var handleConnection = function(e){
+  console.log('Spark connected:', e.name);
 };
 
 
@@ -33,7 +34,7 @@ var handleError = function(err){
 };
 
 
-var newEvent = function(e){
+var handleEvent = function(e){
   sparkModel.callWebhook({
     coreId: e.coreId,
     pinId: e.data.pinId

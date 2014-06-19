@@ -10,7 +10,7 @@ block content
           .panel-body
             ul.list-group
               each core, i in cores
-                a.list-group-item(href="core/#{core.opts.coreId}")
-                  span.color(style="background-color:#{core.opts.color.toUpperCase()}")
-                  span.name #{core.opts.color.toUpperCase()}
-                  span.core-details Core Id: #{core.opts.coreId}
+                a.list-group-item(href="core/#{core.coreId}")
+                  span.color(style="background-color:#{core.color.toUpperCase()}")
+                  span.name #{core.color.toUpperCase()}
+                  span.core-details Core Id: #{core.coreId}
