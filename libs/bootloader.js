@@ -1,3 +1,4 @@
+var Q = require('q');
 var fs = require('fs');
 var crypto = require('crypto');
 var sockets = require('./sockets');
@@ -7,7 +8,6 @@ var SparkApi = require(
 
 
 exports.generateCode = function(opts, next){
-
   fs.readFile('./duino/template.ino', 'utf8', function(err, data){
     var fileContents = replaceKeysWithProperties(opts, data);
     var currentDate = new Date().valueOf().toString();
@@ -15,6 +15,7 @@ exports.generateCode = function(opts, next){
       .update(currentDate + opts.coreId)
       .digest('hex') + '.ino';
     var filePath = './duino/generated/' + fileName;
+
     fs.writeFile(
       filePath, fileContents, 'utf8',
       function(error, data){
@@ -26,6 +27,8 @@ exports.generateCode = function(opts, next){
 
 
 exports.flash = function(opts){
+  var deferred = Q.defer();
+
   var client = new SparkApi(
     'https://api.spark.io',
     process.env.SPARK_ACCESS_TOKEN
@@ -33,10 +36,10 @@ exports.flash = function(opts){
 
   client.flashCore(opts.coreId, {file : opts.filePath}).then(function(){
     console.log('\nBootloaded New Code:', opts.filePath);
-    sockets.getIo().sockets.emit('flash-complete', {
-      coreId: opts.coreId
-    });
+    deferred.resolve();
   });
+
+  return deferred.promise;
 };
 
 
