@@ -26,7 +26,7 @@ var getSparkModel = function(req, res, next){
   sparkModel.getByCoreId(req.params.id).then(function(core){
     req.core = core;
     if(next) next();
-  })
+  });
 };
 
 
