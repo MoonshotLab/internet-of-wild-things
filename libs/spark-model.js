@@ -20,27 +20,8 @@ var getAll = function(){
   var deferred = Q.defer();
 
   collection.find().toArray(function(err, results){
-    console.log(results);
     deferred.resolve(results);
   });
-
-  return deferred.promise;
-};
-
-
-var upsert = function(opts){
-  var deferred = Q.defer();
-
-  collection.update(
-    { coredId: opts.id },
-    { $set: opts },
-    { upsert: true },
-
-    function(err, record, stats){
-      if(err) console.log('Upsert Error:', err);
-      deferred.resolve(record);
-    }
-  );
 
   return deferred.promise;
 };
@@ -60,30 +41,59 @@ var getByCoreId = function(coreId){
 
 
 var createWebhook = function(opts){
-  getByCoreId(opts.coreId)
-    .then(function(model){
-      var webhooks = model.webhooks;
-      webhooks[opts.pinId] = opts.url;
+  var deferred = Q.defer();
 
-      upsert({
-        coreId: opts.coreId,
-        webhooks: webhooks
-      }).then(deferred.resolve);
+  var updateModel = function(model){
+    var webhooks = model.webhooks;
+    webhooks[opts.pinId] = opts.url;
+
+    collection.findAndModify(
+      { coredId: opts.coreId },
+      [['_id','asc']],
+      { $set: { webhooks: webhooks } },
+    function(err, update){
+      deferred.resolve(update);
     });
+  };
+
+  getByCoreId(opts.coreId).then(updateModel);
+  return deferred.promise;
 };
 
 
 var destroyWebhook = function(opts){
-  getByCoreId(opts.coreId)
-    .then(function(model){
-      var webhooks = model.webhooks;
-      delete webhooks[opts.pinId];
+  var deferred = Q.defer();
 
-      upsert({
-        coreId: opts.coreId,
-        webhooks: webhooks
-      }).then(deferred.resolve);
+  var updateModel = function(model){
+    var webhooks = model.webhooks;
+    delete webhooks[opts.pinId];
+
+    collection.findAndModify(
+      { coredId: opts.coreId },
+      [['_id','asc']],
+      { $set: { webhooks: webhooks } },
+    function(err, update){
+      deferred.resolve(update);
     });
+  };
+
+  getByCoreId(opts.coreId).then(updateModel);
+  return deferred.promise;
+};
+
+
+var setPins = function(opts){
+  var deferred = Q.defer();
+
+  collection.findAndModify(
+    { coreId: opts.coreId },
+    [['_id','asc']],
+    { $set: { pins: opts.pins } },
+  function(err, update, stats){
+    deferred.resolve(update);
+  });
+
+  return deferred.promise;
 };
 
 
@@ -109,8 +119,8 @@ var callWebhook = function(opts){
 
 exports.connect = connect;
 exports.getAll = getAll;
+exports.setPins = setPins;
 exports.getByCoreId = getByCoreId;
-exports.upsert = upsert;
 exports.destroyWebhook = destroyWebhook;
 exports.createWebhook = createWebhook;
 exports.callWebhook = callWebhook;

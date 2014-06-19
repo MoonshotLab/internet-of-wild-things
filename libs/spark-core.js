@@ -1,6 +1,7 @@
 var Q = require('q');
 var bootloader = require('./bootloader');
 var spark = require('sparknode');
+var needle = require('needle');
 var sparkModel = require('./spark-model');
 var sockets = require('./sockets');
 
@@ -40,7 +41,7 @@ var handleEvent = function(e){
     pinId: e.data.pinId
   });
 
-  sockets.getIo().emit('input-update', opts);
+  sockets.getIo().emit('input-update', e);
 };
 
 
@@ -48,7 +49,7 @@ var getPin = function(opts){
   var deferred = Q.defer();
 
   var url = [
-    'https://api.spark.io/v1/devices/',
+    'https://api.spark.io/v1/devices',
     opts.coreId,
     'getState'
   ].join('/');
@@ -70,17 +71,18 @@ var setPin = function(opts){
   var deferred = Q.defer();
 
   var url = [
-    'https://api.spark.io/v1/devices/',
+    'https://api.spark.io/v1/devices',
     opts.coreId,
     'setState'
   ].join('/');
 
   var params = {
     access_token: process.env.SPARK_ACCESS_TOKEN,
-    params: opts.pinId
+    params: opts.pinId + ',' + opts.pinVal
   };
 
   needle.post(url, params, function(err, res, body){
+    if(err) console.log(err);
     deferred.resolve(body);
   });
 
@@ -89,11 +91,18 @@ var setPin = function(opts){
 
 
 var setPinDefinitions = function(opts){
-  sparkModel.upsert(opts)
+  sparkModel.setPins(opts)
     .then(bootloader.generateCode)
-    .then(bootloader.flash)
+    .then(function(filePath){
+      bootloader.flash({
+        coreId: opts.coreId,
+        filePath: filePath
+      });
+    })
     .then(function(){
-      sockets.getIo().emit('flash-complete', opts.coreId);
+      sockets.getIo().sockets.emit('flash-complete', {
+        coreId: opts.coreId
+      });
     });
 };
 

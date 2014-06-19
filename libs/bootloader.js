@@ -1,13 +1,14 @@
 var Q = require('q');
 var fs = require('fs');
 var crypto = require('crypto');
-var sockets = require('./sockets');
 var SparkApi = require(
   '../node_modules/spark-cli/lib/ApiClient'
 );
 
 
-exports.generateCode = function(opts, next){
+exports.generateCode = function(opts){
+  var deferred = Q.defer();
+
   fs.readFile('./duino/template.ino', 'utf8', function(err, data){
     var fileContents = replaceKeysWithProperties(opts, data);
     var currentDate = new Date().valueOf().toString();
@@ -19,10 +20,12 @@ exports.generateCode = function(opts, next){
     fs.writeFile(
       filePath, fileContents, 'utf8',
       function(error, data){
-        if(next) next(err, filePath);
+        deferred.resolve(filePath);
       }
     );
   });
+
+  return deferred.promise;
 };
 
 
