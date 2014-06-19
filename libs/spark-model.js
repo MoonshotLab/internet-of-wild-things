@@ -88,7 +88,10 @@ var setPins = function(opts){
   collection.findAndModify(
     { coreId: opts.coreId },
     [['_id','asc']],
-    { $set: { pins: opts.pins } },
+    { $set: {
+      pins: opts.pins,
+      analogThreshold: opts.analogThreshold
+    } },
   function(err, update, stats){
     deferred.resolve(update);
   });
