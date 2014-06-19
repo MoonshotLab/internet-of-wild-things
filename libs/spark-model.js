@@ -48,7 +48,7 @@ var createWebhook = function(opts){
     webhooks[opts.pinId] = opts.url;
 
     collection.findAndModify(
-      { coredId: opts.coreId },
+      { coreId: opts.coreId },
       [['_id','asc']],
       { $set: { webhooks: webhooks } },
     function(err, update){
@@ -69,10 +69,10 @@ var destroyWebhook = function(opts){
     delete webhooks[opts.pinId];
 
     collection.findAndModify(
-      { coredId: opts.coreId },
+      { coreId: opts.coreId },
       [['_id','asc']],
-      { $set: { webhooks: webhooks } },
-    function(err, update){
+      { $set: { webhooks : webhooks } },
+    function(err, update, x){
       deferred.resolve(update);
     });
   };
