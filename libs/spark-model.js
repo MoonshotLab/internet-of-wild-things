@@ -1,4 +1,5 @@
 var Q = require('q');
+var needle = require('needle');
 var MongoClient = require('mongodb').MongoClient;
 var collection = null;
 
@@ -71,7 +72,7 @@ var createWebhook = function(opts){
 };
 
 
-var destroyWebhook = function(){
+var destroyWebhook = function(opts){
   getByCoreId(opts.coreId)
     .then(function(model){
       var webhooks = model.webhooks;
@@ -85,9 +86,29 @@ var destroyWebhook = function(){
 };
 
 
-var callWebhook = function(){
+var callWebhook = function(opts){
+  getByCoreId(opts.coreId).then(function(record){
+    var webhookURL = record.webhooks[opts.pinId];
 
+    if(webhookURL){
+      var formData = [
+        'pinId=',
+        opts.pinId,
+        '&pinVal=',
+        opts.pinVal
+      ].join('');
+
+      needle.post(webhookURL, formData, function(err, res){
+        if(next) next(err, res);
+      });
+    }
+  });
 };
 
 
 exports.connect = connect;
+exports.getByCoreId = getByCoreId;
+exports.upsert = upsert;
+exports.destroyWebhook = destroyWebhook;
+exports.createWebhook = createWebhook;
+exports.callWebhook = callWebhook;
