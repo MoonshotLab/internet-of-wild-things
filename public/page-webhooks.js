@@ -39,11 +39,12 @@ $(function(){
     if(!pinVal) alert('Please add an input value');
     else{
 
+      var urlOrigin = window.location.origin;
       var template = [
         "<div class='alert alert-info'>",
           "<p>Paste this URL into the Zapier interface, make sure to select 'GET'</p>",
           "<strong>",
-            "http://104.131.225.4:49156/core/",
+            urlOrigin + '/core/',
             core.coreId,
             "/setPin",
             "?pinId=",
