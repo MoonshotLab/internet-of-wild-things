@@ -64,3 +64,8 @@ Forwards a `GET` to a `POST` for a webhook matching the specified core's pinId. 
 
 ![Breadboard and Circuit](http://i.imgur.com/iCDqQ00.jpg)
 ![Tool Table](http://i.imgur.com/ZZO8H67.jpg)
+
+
+## Environment Variables
+* `DB_CONNECTOR` - A mongo connection string
+* `SPARK_ACCESS_TOKEN` - An access token for the spark api
