@@ -12,7 +12,7 @@ var sparkClients = [];
 
 // Connect to the database, create the core clients
 var MongoClient = require('mongodb').MongoClient;
-MongoClient.connect(process.env.WILD_THANGS_DB_CONNECTOR, function(err, client){
+MongoClient.connect(process.env.DB_CONNECTOR, function(err, client){
   if(err) throw err;
   db = client;
 
