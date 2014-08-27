@@ -43,7 +43,7 @@ $(function(){
         "<div class='alert alert-info'>",
           "<p>Paste this URL into the Zapier interface, make sure to select 'GET'</p>",
           "<strong>",
-            "http://wild-thangs.herokuapp.com/core/",
+            "http://104.131.225.4:49156/core/",
             core.coreId,
             "/setPin",
             "?pinId=",
