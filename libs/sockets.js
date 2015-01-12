@@ -1,49 +1,17 @@
-var cores = require('./cores');
-var spark = require('./spark');
+var sparkModel = require('./spark-model');
+var sparkCore = require('./spark-core');
 var io = null;
-
-exports.connect = function(){
-  var clients = cores.getClients();
-
-  console.log('\nConnected the following Spark Core Clients:');
-  clients.forEach(function(client){
-    console.log(client.opts.color, ':', client.opts.id);
-  });
-  console.log('\n');
-
-  spark.subscribe('iot-update').on('update', function(e){
-
-    // Convert stringed opts to JSON obj
-    var opts = {coreId: e.coreid };
-    try{
-      var data = JSON.parse(e.data);
-      opts.pinId = data.pinId;
-      opts.state = data.state;
-
-      console.log('\n');
-      console.log('---', cores.getColorById(e.coreid).toUpperCase(), 'Event ---');
-      console.log('PinId: ', data.pinId);
-      console.log('State: ', data.state);
-
-    } catch(e){
-      if(e) console.log(e);
-    }
-
-    cores.callWebhook(opts);
-    io.sockets.emit('input-update', opts);
-  });
-};
 
 
 exports.init = function(connector){
   io = connector;
 
   io.sockets.on('connection', function(socket){
-    socket.on('set-pin-val', cores.setPin);
-    socket.on('get-pin-val', cores.getPin);
-    socket.on('create-webhook', cores.createWebhook);
-    socket.on('destroy-webhook', cores.destroyWebhook);
-    socket.on('set-pin-definitions', cores.setPinDefinitions);
+    socket.on('set-pin-val', sparkCore.setPin);
+    socket.on('get-pin-val', sparkCore.getPin);
+    socket.on('create-webhook', sparkModel.createWebhook);
+    socket.on('destroy-webhook', sparkModel.destroyWebhook);
+    socket.on('set-pin-definitions', sparkCore.setPinDefinitions);
   });
 };
 

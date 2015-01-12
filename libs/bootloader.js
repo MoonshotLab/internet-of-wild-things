@@ -1,12 +1,13 @@
+var Q = require('q');
 var fs = require('fs');
 var crypto = require('crypto');
-var sockets = require('./sockets');
 var SparkApi = require(
   '../node_modules/spark-cli/lib/ApiClient'
 );
 
 
-exports.generateCode = function(opts, next){
+exports.generateCode = function(opts){
+  var deferred = Q.defer();
 
   fs.readFile('./duino/template.ino', 'utf8', function(err, data){
     var fileContents = replaceKeysWithProperties(opts, data);
@@ -15,17 +16,22 @@ exports.generateCode = function(opts, next){
       .update(currentDate + opts.coreId)
       .digest('hex') + '.ino';
     var filePath = './duino/generated/' + fileName;
+
     fs.writeFile(
       filePath, fileContents, 'utf8',
       function(error, data){
-        if(next) next(err, filePath);
+        deferred.resolve(filePath);
       }
     );
   });
+
+  return deferred.promise;
 };
 
 
 exports.flash = function(opts){
+  var deferred = Q.defer();
+
   var client = new SparkApi(
     'https://api.spark.io',
     process.env.SPARK_ACCESS_TOKEN
@@ -33,10 +39,10 @@ exports.flash = function(opts){
 
   client.flashCore(opts.coreId, {file : opts.filePath}).then(function(){
     console.log('\nBootloaded New Code:', opts.filePath);
-    sockets.getIo().sockets.emit('flash-complete', {
-      coreId: opts.coreId
-    });
+    deferred.resolve();
   });
+
+  return deferred.promise;
 };
 
 

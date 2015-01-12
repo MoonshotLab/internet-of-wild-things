@@ -9,7 +9,7 @@ $(function(){
       socket.emit('create-webhook', {
         coreId: core.coreId,
         pinId: pinId,
-        webhookUrl: url
+        url: url
       });
 
       var template = [
